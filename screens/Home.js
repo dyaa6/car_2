@@ -16,6 +16,7 @@ const Home = ({ navigation }) => {
   const [unlockActive, setUnlockActive] = useState(false);
   const [lockActive, setLockActive] = useState(false);
   const [boxActive, setBoxActive] = useState(false);
+  const [GlassActive, setGlassActive] = useState(false);
   const [ledOne,setLedONe]=useState(false);
   const [ledTwo,setLedTwo]=useState(false);
   const [ledThree,setLedThree]=useState(false);
@@ -43,7 +44,7 @@ const Styles = useThemeStyles(theme);
 // sycronisation
   useEffect(() => {
     const interval=setInterval(()=>{
-      checkLoginStatus();
+      //checkLoginStatus();
       new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         const url = 'http://2.2.2.2/statewdx';
@@ -100,25 +101,6 @@ const Styles = useThemeStyles(theme);
 
 
 
-  // Check if isloggedin variable exists in AsyncStorage
-
-  const checkLoginStatus = async () => {
-    try {
-      const isloggedin = await AsyncStorage.getItem('isloggedin');
-      const devPass = await AsyncStorage.getItem('devPass');
-      setSavedPass(devPass);
-      if (isloggedin !== null) {
-        // isloggedin variable exists, do nothing
-      } else {
-        // isloggedin variable doesn't exist, redirect to login screen
-        navigation.navigate('تسجيل الدخول');
-        //console.log('you are not logged in');
-      }
-    } catch (e) {
-      // Error reading AsyncStorage value
-      setErrormsg('Error reading AsyncStorage value:', e);
-    }
-  };
 
   const formatTime=(seconds)=> {
     if (isNaN(seconds) || seconds < 0) {
@@ -137,69 +119,32 @@ const Styles = useThemeStyles(theme);
 
 
 
-  const handlePowerButtonDown = () => {
-    setPowerButtonDown(true);
-  }; //end power button down
-  const handlePowerButtonUp = () => {
-    setPowerButtonDown(false);
-
-  }; 
-
 
   const handleUnLockDown = () => {
     setUnlockActive(true);
     Vibration.vibrate(80);
-        //check if it's you
-        new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          const url = 'http://2.2.2.2/passwdx';
-      
-          xhr.onreadystatechange = async () => {
-            if (xhr.readyState === 4) {
-              if (xhr.status === 200) {
-                resolve(xhr.responseText);
-                setErrormsgState(false);
-                if(!(xhr.responseText==savedPass)){
-                  await AsyncStorage.removeItem('devPass');
-                  navigation.navigate('تسجيل الدخول');
-                  return;
-                }
-                else{
-                  //send the request
-                          new Promise((resolve, reject) => {
-                            const xhr = new XMLHttpRequest();
-                            const url = 'http://2.2.2.2/opennwdx';
-                        
-                            xhr.onreadystatechange = () => {
-                              if (xhr.readyState === 4) {
-                                if (xhr.status === 200) {
-                                  resolve(xhr.responseText);
-                                  setErrormsgState(false);
-                                  ////setLedONe(true);
-                                } else {
-                                  //reject("لايوجد اتصال بالسيارة!");
-                                  setErrormsg("لايوجد اتصال بالسيارة!");
-                                  setErrormsgState(true);
-                                }
-                              }
-                            };
-                        
-                            xhr.open('GET', url, true);
-                            xhr.timeout = 1000; // set the timeout to 2 seconds
-                            xhr.send();
-                          });
-                }
-              } else {
-                setErrormsg("هناك خطأ ما!");
-                setErrormsgState(true);
-              }
+      new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const url = 'http://2.2.2.2/open';
+    
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              resolve(xhr.responseText);
+              setErrormsgState(false);
+              ////setLedONe(true);
+            } else {
+              //reject("لايوجد اتصال بالسيارة!");
+              setErrormsg("لايوجد اتصال بالسيارة!");
+              setErrormsgState(true);
             }
-          };
-      
-          xhr.open('GET', url, true);
-          xhr.timeout = 500; // set the timeout to 2 seconds
-          xhr.send();
-        });
+          }
+        };
+    
+        xhr.open('GET', url, true);
+        xhr.timeout = 1000; // set the timeout to 2 seconds
+        xhr.send();
+      });
 
   }; 
   const handleUnLockUp = () => {
@@ -210,114 +155,105 @@ const Styles = useThemeStyles(theme);
   const handleLockDown = () => {
     setLockActive(true);
     Vibration.vibrate(80);
-        //check if it's you
-        new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          const url = 'http://2.2.2.2/passwdx';
-      
-          xhr.onreadystatechange = async () => {
-            if (xhr.readyState === 4) {
-              if (xhr.status === 200) {
-                resolve(xhr.responseText);
-                setErrormsgState(false);
-                if(!(xhr.responseText==savedPass)){
-                  await AsyncStorage.removeItem('devPass');
-                  navigation.navigate('تسجيل الدخول');
-                  return;
-                }
-                else{
-                  //send the request
-                          new Promise((resolve, reject) => {
-                            const xhr = new XMLHttpRequest();
-                            const url = 'http://2.2.2.2/lockkwdx';
-                        
-                            xhr.onreadystatechange = () => {
-                              if (xhr.readyState === 4) {
-                                if (xhr.status === 200) {
-                                  resolve(xhr.responseText);
-                                  setErrormsgState(false);
-                                  ////setLedONe(true);
-                                } else {
-                                  //reject("لايوجد اتصال بالسيارة!");
-                                  setErrormsg("لايوجد اتصال بالسيارة!");
-                                  setErrormsgState(true);
-                                }
-                              }
-                            };
-                        
-                            xhr.open('GET', url, true);
-                            xhr.timeout = 1000; // set the timeout to 2 seconds
-                            xhr.send();
-                            });
-                }
-              } else {
-                setErrormsg("هناك خطأ ما!");
-                setErrormsgState(true);
-              }
-            }
-          };
-      
-          xhr.open('GET', url, true);
-          xhr.timeout = 500; // set the timeout to 2 seconds
-          xhr.send();
-        });
-        //end checking
+    new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = 'http://2.2.2.2/lock';
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            resolve(xhr.responseText);
+            setErrormsgState(false);
+            ////setLedONe(true);
+          } else {
+            //reject("لايوجد اتصال بالسيارة!");
+            setErrormsg("لايوجد اتصال بالسيارة!");
+            setErrormsgState(true);
+          }
+        }
+      };
+      xhr.open('GET', url, true);
+      xhr.timeout = 1000; // set the timeout to 2 seconds
+      xhr.send();
+      });
   }; 
   const handleLockUp = () => {
     setLockActive(false);
-    
   };
+
+
+
+
+  
+  const handleGlassUp = () => {
+    setGlassActive(false);
+    Vibration.vibrate(80);
+    new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = 'http://2.2.2.2/glassUP';
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            resolve(xhr.responseText);
+            setErrormsgState(false);
+            ////setLedONe(true);
+          } else {
+            //reject("لايوجد اتصال بالسيارة!");
+            setErrormsg("لايوجد اتصال بالسيارة!");
+            setErrormsgState(true);
+          }
+        }
+      };
+      xhr.open('GET', url, true);
+      xhr.timeout = 1000; // set the timeout to 2 seconds
+      xhr.send();
+      });
+  }; 
+
+  
+  
+  const handleGlassDown = () => {
+    setGlassActive(true);
+    Vibration.vibrate(80);
+    new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = 'http://2.2.2.2/glassDown';
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            resolve(xhr.responseText);
+            setErrormsgState(false);
+            ////setLedONe(true);
+          } else {
+            //reject("لايوجد اتصال بالسيارة!");
+            setErrormsg("لايوجد اتصال بالسيارة!");
+            setErrormsgState(true);
+          }
+        }
+      };
+      xhr.open('GET', url, true);
+      xhr.timeout = 1000; // set the timeout to 2 seconds
+      xhr.send();
+      });
+  }; 
 
   const handleBoxDown = () => {
     setBoxActive(true);
     Vibration.vibrate(80);
-        //check if it's you
-        new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          const url = 'http://2.2.2.2/passwdx';
-      
-          xhr.onreadystatechange = async () => {
-            if (xhr.readyState === 4) {
-              if (xhr.status === 200) {
-                resolve(xhr.responseText);
-                setErrormsgState(false);
-                if(!(xhr.responseText==savedPass)){
-                  await AsyncStorage.removeItem('devPass');
-                  navigation.navigate('تسجيل الدخول');
-                  return;
-                }
-                else{
-                  //send the request
-                          new Promise((resolve, reject) => {
-                            const xhr = new XMLHttpRequest();
-                            const url = 'http://2.2.2.2/boxxwdx';
-                        
-                            xhr.onreadystatechange = () => {
-                              if (xhr.readyState === 4) {
-                                if (xhr.status === 200) {
-                                  resolve(xhr.responseText);
-                                  setErrormsgState(false);
-                                } 
-                              }
-                            };
-                            xhr.open('GET', url, true);
-                            xhr.timeout = 1000;
-                            xhr.send();
-                            });
-                            
-                }
-              } else {
-                setErrormsg("هناك خطأ ما!");
-                setErrormsgState(true);
-              }
-            }
-          };
-      
-          xhr.open('GET', url, true);
-          xhr.timeout = 500; // set the timeout to 2 seconds
-          xhr.send();
-        });
-        //end checking
+  new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const url = 'http://2.2.2.2/trunk';
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          resolve(xhr.responseText);
+          setErrormsgState(false);
+        } 
+      }
+    };
+    xhr.open('GET', url, true);
+    xhr.timeout = 1000;
+    xhr.send();
+    });
   }; 
   const handleBoxUp = () => {
     setBoxActive(false);
@@ -328,104 +264,51 @@ const Styles = useThemeStyles(theme);
     setPressed(true);
     Vibration.vibrate(80);
 
+    if(!isEnabled1){ //فتح سويج
+      new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const url = 'http://2.2.2.2/switch1On';
+    
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              resolve(xhr.responseText);
+              setErrormsgState(false);
+              ////setLedONe(true);
+            } else {
+              setErrormsg("لايوجد اتصال بالسيارة!");
+              setErrormsgState(true);
+            }
+          }
+        };
+        xhr.open('GET', url, true);
+        xhr.timeout = 1000; // set the timeout to 2 seconds
+        xhr.send();
+      });
+    }
+
     new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = 'http://2.2.2.2/passwdx';
-      xhr.onreadystatechange = async () => {
+      const url = 'http://2.2.2.2/motorOn';
+  
+      xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             resolve(xhr.responseText);
             setErrormsgState(false);
-            if(!(xhr.responseText==savedPass)){
-              await AsyncStorage.removeItem('devPass');
-              navigation.navigate('تسجيل الدخول');
-              return;
-            }
-            else{
-              if(!isEnabled2){ //فتح سويج
-                new Promise((resolve, reject) => {
-                  const xhr = new XMLHttpRequest();
-                  const url = 'http://2.2.2.2/sw1on';
-              
-                  xhr.onreadystatechange = () => {
-                    if (xhr.readyState === 4) {
-                      if (xhr.status === 200) {
-                        resolve(xhr.responseText);
-                        setErrormsgState(false);
-                        ////setLedONe(true);
-                      } else {
-                        //reject("لايوجد اتصال بالسيارة!");
-                        setErrormsg("لايوجد اتصال بالسيارة!");
-                        setErrormsgState(true);
-                      }
-                    }
-                  };
-                  xhr.open('GET', url, true);
-                  xhr.timeout = 1000; // set the timeout to 2 seconds
-                  xhr.send();
-                });
-
-                new Promise((resolve, reject) => {
-                  const xhr = new XMLHttpRequest();
-                  const url = 'http://2.2.2.2/sw2on';
-              
-                  xhr.onreadystatechange = () => {
-                    if (xhr.readyState === 4) {
-                      if (xhr.status === 200) {
-                        resolve(xhr.responseText);
-                        setErrormsgState(false);
-                        ////setLedONe(true);
-                      } else {
-                        //reject("لايوجد اتصال بالسيارة!");
-                        setErrormsg("لايوجد اتصال بالسيارة!");
-                        setErrormsgState(true);
-                      }
-                    }
-                  };
-              
-                  xhr.open('GET', url, true);
-                  xhr.timeout = 1000; // set the timeout to 2 seconds
-                  xhr.send();
-                });
-
-              }
-              //send the request
-              new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                const url = 'http://2.2.2.2/run_on';
-            
-                xhr.onreadystatechange = () => {
-                  if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                      resolve(xhr.responseText);
-                      setErrormsgState(false);
-                      ////setLedONe(true);
-                    } else {
-                      //reject("لايوجد اتصال بالسيارة!");
-                      setErrormsg("لايوجد اتصال بالسيارة!");
-                      setErrormsgState(true);
-                    }
-                  }
-                };
-            
-                xhr.open('GET', url, true);
-                xhr.timeout = 1000; // set the timeout to 2 seconds
-                xhr.send();
-              });
-                        
-            }
+            ////setLedONe(true);
           } else {
-            setErrormsg("هناك خطأ ما!");
+            //reject("لايوجد اتصال بالسيارة!");
+            setErrormsg("لايوجد اتصال بالسيارة!");
             setErrormsgState(true);
           }
         }
       };
   
       xhr.open('GET', url, true);
-      xhr.timeout = 500; // set the timeout to 2 seconds
+      xhr.timeout = 1000; // set the timeout to 2 seconds
       xhr.send();
-    });//end check   
-
+    }); 
   };
 
   const handlePressOut = () => {
@@ -434,7 +317,7 @@ const Styles = useThemeStyles(theme);
     //setLedThree(false);
     new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = 'http://2.2.2.2/run_off';
+      const url = 'http://2.2.2.2/motorOff';
   
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
@@ -460,234 +343,57 @@ const Styles = useThemeStyles(theme);
 const switchOneOn=async()=>{
   setIsEnabled1(previousState => !previousState);
   if (!isEnabled1){
-    //check if it's you
     new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = 'http://2.2.2.2/passwdx';
+      const url = 'http://2.2.2.2/switch1On';
   
-      xhr.onreadystatechange = async () => {
+      xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             resolve(xhr.responseText);
             setErrormsgState(false);
-            if(!(xhr.responseText==savedPass)){
-              await AsyncStorage.removeItem('devPass');
-              navigation.navigate('تسجيل الدخول');
-              return;
-            }
-            else{
-              //send the request
-                      new Promise((resolve, reject) => {
-                        const xhr = new XMLHttpRequest();
-                        const url = 'http://2.2.2.2/sw1on';
-                    
-                        xhr.onreadystatechange = () => {
-                          if (xhr.readyState === 4) {
-                            if (xhr.status === 200) {
-                              resolve(xhr.responseText);
-                              setErrormsgState(false);
-                              ////setLedONe(true);
-                            } else {
-                              //reject("لايوجد اتصال بالسيارة!");
-                              setErrormsg("لايوجد اتصال بالسيارة!");
-                              setErrormsgState(true);
-                            }
-                          }
-                        };
-                    
-                        xhr.open('GET', url, true);
-                        xhr.timeout = 1000; // set the timeout to 2 seconds
-                        xhr.send();
-                      });
-            }
+            ////setLedONe(true);
           } else {
-            setErrormsg("هناك خطأ ما!");
+            //reject("لايوجد اتصال بالسيارة!");
+            setErrormsg("لايوجد اتصال بالسيارة!");
             setErrormsgState(true);
           }
         }
       };
   
       xhr.open('GET', url, true);
-      xhr.timeout = 500; // set the timeout to 2 seconds
+      xhr.timeout = 1000; // set the timeout to 2 seconds
       xhr.send();
     });
-    //end checking
-    
-    
 }
   else{//switch one off
     setIsEnabled2(false);
     setButtonOneEnabled(true);
-        //check if it's you
-        new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          const url = 'http://2.2.2.2/passwdx';
-      
-          xhr.onreadystatechange = async () => {
-            if (xhr.readyState === 4) {
-              if (xhr.status === 200) {
-                resolve(xhr.responseText);
-                setErrormsgState(false);
-                if(!(xhr.responseText==savedPass)){
-                  await AsyncStorage.removeItem('devPass');
-                  navigation.navigate('تسجيل الدخول');
-                  return;
-                }
-                else{
-                  //send the request
-                          new Promise((resolve, reject) => {
-                            const xhr = new XMLHttpRequest();
-                            const url = 'http://2.2.2.2/sw1off';
-                        
-                            xhr.onreadystatechange = () => {
-                              if (xhr.readyState === 4) {
-                                if (xhr.status === 200) {
-                                  resolve(xhr.responseText);
-                                  setErrormsgState(false);
-                                  ////setLedONe(true);
-                                } else {
-                                  //reject("لايوجد اتصال بالسيارة!");
-                                  setErrormsg("لايوجد اتصال بالسيارة!");
-                                  setErrormsgState(true);
-                                }
-                              }
-                            };
-                        
-                            xhr.open('GET', url, true);
-                            xhr.timeout = 1000; // set the timeout to 2 seconds
-                            xhr.send();
-                          });
-                }
-              } else {
-                setErrormsg("هناك خطأ ما!");
-                setErrormsgState(true);
-              }
-            }
-          };
-      
-          xhr.open('GET', url, true);
-          xhr.timeout = 500; // set the timeout to 2 seconds
-          xhr.send();
-        });
-        //end checking
+    new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = 'http://2.2.2.2/switch1Off';
+  
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            resolve(xhr.responseText);
+            setErrormsgState(false);
+            ////setLedONe(true);
+          } else {
+            //reject("لايوجد اتصال بالسيارة!");
+            setErrormsg("لايوجد اتصال بالسيارة!");
+            setErrormsgState(true);
+          }
+        }
+      };
+  
+      xhr.open('GET', url, true);
+      xhr.timeout = 1000; // set the timeout to 2 seconds
+      xhr.send();
+    });
+                
   }
 }// end switch one
-const switchTwoOn=()=>{
-  if(isEnabled1){
-  setIsEnabled2(previousState => !previousState)};
-  if(!isEnabled2 && isEnabled1){
-    setButtonOneEnabled(false);
-    
-        //check if it's you
-        new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          const url = 'http://2.2.2.2/passwdx';
-      
-          xhr.onreadystatechange = async () => {
-            if (xhr.readyState === 4) {
-              if (xhr.status === 200) {
-                resolve(xhr.responseText);
-                setErrormsgState(false);
-                if(!(xhr.responseText==savedPass)){
-                  await AsyncStorage.removeItem('devPass');
-                  navigation.navigate('تسجيل الدخول');
-                  return;
-                }
-                else{
-                  //send the request
-                          new Promise((resolve, reject) => {
-                            const xhr = new XMLHttpRequest();
-                            const url = 'http://2.2.2.2/sw2on';
-                        
-                            xhr.onreadystatechange = () => {
-                              if (xhr.readyState === 4) {
-                                if (xhr.status === 200) {
-                                  resolve(xhr.responseText);
-                                  setErrormsgState(false);
-                                  ////setLedONe(true);
-                                } else {
-                                  //reject("لايوجد اتصال بالسيارة!");
-                                  setErrormsg("لايوجد اتصال بالسيارة!");
-                                  setErrormsgState(true);
-                                }
-                              }
-                            };
-                        
-                            xhr.open('GET', url, true);
-                            xhr.timeout = 1000; // set the timeout to 2 seconds
-                            xhr.send();
-                          });
-                }
-              } else {
-                setErrormsg("هناك خطأ ما!");
-                setErrormsgState(true);
-              }
-            }
-          };
-      
-          xhr.open('GET', url, true);
-          xhr.timeout = 500; // set the timeout to 2 seconds
-          xhr.send();
-        });
-        //end checking
-
-  }else{
-                //when switch two is off
-    setButtonOneEnabled(true);
-        //check if it's you
-        new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          const url = 'http://2.2.2.2/passwdx';
-      
-          xhr.onreadystatechange = async () => {
-            if (xhr.readyState === 4) {
-              if (xhr.status === 200) {
-                resolve(xhr.responseText);
-                setErrormsgState(false);
-                if(!(xhr.responseText==savedPass)){
-                  await AsyncStorage.removeItem('devPass');
-                  navigation.navigate('تسجيل الدخول');
-                  return;
-                }
-                else{
-                  //send the request
-                          new Promise((resolve, reject) => {
-                            const xhr = new XMLHttpRequest();
-                            const url = 'http://2.2.2.2/sw2off';
-                        
-                            xhr.onreadystatechange = () => {
-                              if (xhr.readyState === 4) {
-                                if (xhr.status === 200) {
-                                  resolve(xhr.responseText);
-                                  setErrormsgState(false);
-                                  ////setLedONe(true);
-                                } else {
-                                  //reject("لايوجد اتصال بالسيارة!");
-                                  setErrormsg("لايوجد اتصال بالسيارة!");
-                                  setErrormsgState(true);
-                                }
-                              }
-                            };
-                        
-                            xhr.open('GET', url, true);
-                            xhr.timeout = 1000; // set the timeout to 2 seconds
-                            xhr.send();
-                          });
-                }
-              } else {
-                setErrormsg("هناك خطأ ما!");
-                setErrormsgState(true);
-              }
-            }
-          };
-      
-          xhr.open('GET', url, true);
-          xhr.timeout = 500; // set the timeout to 2 seconds
-          xhr.send();
-        });
-        //end checking
-  }
-}
 
   return (
 <View style={Styles.container}>
@@ -704,7 +410,6 @@ const switchTwoOn=()=>{
         <View style={[Styles.stateLED,{backgroundColor: stateLed?"green":Colors.darkColor}]}/>
       <View style={Styles.LEDs}>
       <View style={[Styles.led1, ledOne ? Styles.ledOneOn : Styles.ledOneOff]} />
-      <View style={[Styles.led2, ledTwo ? Styles.ledTwoOn : Styles.ledTowOff]} />
       <View style={[Styles.led3, ledThree ? Styles.ledThreeOn : Styles.ledThreeOff]} />
 
       </View>
@@ -720,15 +425,7 @@ const switchTwoOn=()=>{
         value={isEnabled1}
         style={Styles.switchOne} // set size
       />
-      <Switch
-        trackColor={{ false: '#767577', true: activeColor.secondColor}}
-        thumbColor={activeColor.dark?(isEnabled2 ? "#03078f" : '#9AA3A8'):(isEnabled2 ? activeColor.mainColor : '#f4f3f4')}
-      ios_backgroundColor="#3e3e3e"
-      onValueChange={switchTwoOn}
-      value={isEnabled2}
-      disabled={switchTwoEnabled}
-      style={Styles.switchTwo} // set size
-    />
+
       <TouchableOpacity
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
@@ -744,28 +441,19 @@ const switchTwoOn=()=>{
         تشغيل
       </Text>
     </TouchableOpacity>
-      </View>
-
-{/*power button */}
-      {/* <TouchableOpacity
-        style={[Styles.powerButton, isLoading1 && Styles.buttonLoading,mode? styles.hidden : styles.visible]}
-        onPress={handlePress1}
-        activeOpacity={0.7}
-      >
-        <FontAwesome name="power-off" size={64} color="black" />
-      </TouchableOpacity> */}
+    </View>
       
 
 
 
 
 <View style={Styles.lockContainer}>
-
+<View style={Styles.row1}>
       <TouchableOpacity
       onPressIn={handleLockDown}
       onPressOut={handleLockUp}
       activeOpacity={1}
-      style={[Styles.button,
+      style={[Styles.button,Styles.lockBtn,
          {  backgroundColor: lockActive ? activeColor.secondColor : activeColor.mainColor,
             top: lockActive? 5:0,
         }]}
@@ -773,24 +461,7 @@ const switchTwoOn=()=>{
         <FontAwesome name="lock" size={44} color="#fff" />
 
     </TouchableOpacity>
-    
-
     <TouchableOpacity
-      onPressIn={handleBoxDown}
-      onPressOut={handleBoxUp}
-      activeOpacity={1}
-      style={[Styles.button,
-         {  backgroundColor: boxActive ? activeColor.secondColor : activeColor.mainColor,
-            top: -30
-        }]}
-    >
-        <Image source={require('../assets/trunk-open.png')} style={{width:60,height:34}}/>
-
-    </TouchableOpacity>
-
-
-
-      <TouchableOpacity
       onPressIn={handleUnLockDown}
       onPressOut={handleUnLockUp}
       activeOpacity={1}
@@ -802,6 +473,36 @@ const switchTwoOn=()=>{
               <FontAwesome name="unlock" size={44} color="#fff" />
 
     </TouchableOpacity>
+</View>
+    
+<View style={Styles.row2}>
+    <TouchableOpacity
+      onPressIn={handleBoxDown}
+      onPressOut={handleBoxUp}
+      activeOpacity={1}
+      style={[Styles.button,
+         {  backgroundColor: boxActive ? activeColor.secondColor : activeColor.mainColor}]}
+    >
+        <Image source={require('../assets/trunk-open.png')} style={{width:60,height:34}}/>
+
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      onPressIn={handleGlassDown}
+      onPressOut={handleGlassUp}
+      activeOpacity={1}
+      style={[Styles.button,Styles.glassBtn,
+         {  backgroundColor: GlassActive ? activeColor.secondColor : activeColor.mainColor}]}
+    >
+        <Image source={require('../assets/glass.png')} style={{width:45,height:40}}/>
+
+    </TouchableOpacity>
+
+</View>
+
+
+
+      
 </View>
 
 <View style={Styles.tempContainer}>

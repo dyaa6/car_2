@@ -3,9 +3,8 @@ import { ThemeContext } from "../components/ThemeContect";
 import useThemeStyles from "../components/Styles";
 import { Text, View, Switch,TextInput,TouchableOpacity } from 'react-native'
 import Colors from "../components/Colors";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AutoStart=({ navigation })=>{
+const AutoStart=()=>{
     const {theme}=useContext(ThemeContext);
     let activeColor=Colors[theme.mode];
     const Styles = useThemeStyles(theme);
@@ -21,100 +20,34 @@ const AutoStart=({ navigation })=>{
 
 useEffect(() => {
     new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        const url = 'http://2.2.2.2/dev_ver';
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                if(parseInt(xhr.responseText)<5){
-                  setMsg("عذراً، هذه الميزة ليست متوفرة لديك!");
-                  navigation.navigate("الرئيسية");
-                }
-                else{
-                  new Promise((resolve, reject) => {
-                    const xhr = new XMLHttpRequest();
-                    const url = 'http://2.2.2.2/autoState';
-                    xhr.onreadystatechange = () => {
-                      if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                          if(xhr.responseText.split("#")[0]=="on"){
-                            
-                            setIsenabled(true);
-                            setTryValue(parseInt(xhr.responseText.split("#")[1]));
-                          }
-                          else{
-                            setIsenabled(false);
-                          }
-                        } else {
-                          setMsg("هناك خطأ ما !");
-                          setsucsess(false);
-                          setIsLoading(false);
-                        }
-                      }
-                    };
-                    xhr.open('GET', url, true);
-                    xhr.timeout = 2000; // set the timeout to 2 seconds
-                    xhr.send();
-                  });
-
-
-                }
-            } else {
-              setMsg("لايمكن الاتصال بالسيارة!");
-            }
-          }
-        };
-        xhr.open('GET', url, true);
-        xhr.timeout = 1000;
-        xhr.send();
-      })
-      .catch((error) => {
-        setMsg(true);
-      });
-    },[]);
-
-const getDevPass = async () => {
-    try {
-      // Retrieve the value using the key 'devPass'
-      const devPass = await AsyncStorage.getItem('devPass');
-        if (devPass !== null) {
-        return devPass;
-      } else {
-        setMsg('لم تقم بتسجيل الدخول!');
-        return null;
-      }
-    } catch (error) {
-      setMsg('هناك خطأ ما', error);
-      return null;
-    }
-  };
-const sendRequest = () => {
-    return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = 'http://2.2.2.2/passwdx';
-  
+      const url = 'http://2.2.2.2/autoState';
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            resolve(xhr.responseText);
+            if(xhr.responseText.split("#")[0]=="on"){
+              setIsenabled(true);
+              setTryValue(parseInt(xhr.responseText.split("#")[1]));
+            }
+            else{
+              setIsenabled(false);
+            }
           } else {
-            setMsg("لايمكن الاتصال بالسيارة!");
+            setMsg("لايوجد اتصال!");
             setsucsess(false);
             setIsLoading(false);
           }
         }
       };
-  
       xhr.open('GET', url, true);
       xhr.timeout = 2000; // set the timeout to 2 seconds
       xhr.send();
     });
-  };
+    },[]);
+
 const setAuto=async ()=>{
     setIsLoading(true);
     try {
-      const response = await sendRequest();
-      const savedPass = await getDevPass();
       if (tryValue === '' || tryValue === 0) {
         setMsg('يجب أن تدخل قيمة');
         setsucsess(false);
@@ -122,11 +55,10 @@ const setAuto=async ()=>{
         return;
       }
   
-      if (response === savedPass) {
-        if(isEnabled){
+      if(isEnabled){
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://2.2.2.2/setUpAuto?numOfTries='+tryValue+'&state=on';
+          const url = 'http://2.2.2.2/setAuto?numOfTries='+tryValue+'&state=on';
           xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
               if (xhr.status === 200) {
@@ -136,7 +68,7 @@ const setAuto=async ()=>{
                       setIsLoading(false);
                   }
               } else {
-                setMsg("هناك خطأ ما !");
+                setMsg("لايوجد اتصال!");
                 setsucsess(false);
                 setIsLoading(false);
               }
@@ -151,7 +83,7 @@ const setAuto=async ()=>{
         else{//not enabled
           new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            const url = 'http://2.2.2.2/setUpAuto?numOfTries=0&state=off';
+            const url = 'http://2.2.2.2/setAuto?numOfTries=0&state=off';
             xhr.onreadystatechange = () => {
               if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
@@ -161,7 +93,7 @@ const setAuto=async ()=>{
                         setIsLoading(false);
                     }
                 } else {
-                  setMsg("هناك خطأ ما !");
+                  setMsg("لايوجد اتصال!");
                   setsucsess(false);
                   setIsLoading(false);
                 }
@@ -172,14 +104,6 @@ const setAuto=async ()=>{
             xhr.send();
           });
         }
-      } else {
-        setIsLoading(false);
-        setsucsess(false);
-        await AsyncStorage.removeItem('devPass');
-        await AsyncStorage.removeItem('isloggedin');
-        navigation.navigate('تسجيل الدخول');
-        return;
-      }
   
       setIsLoading(false);
     } catch (error) {

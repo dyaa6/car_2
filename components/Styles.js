@@ -1,3 +1,4 @@
+import { height } from "@fortawesome/free-solid-svg-icons/fa0";
 import Colors from "./Colors";
 
 const useThemeStyles=(theme)=>{
@@ -18,25 +19,7 @@ const useThemeStyles=(theme)=>{
             height: '100%',
             alignItems:"center"
           },
-          button: {
-            height: 70,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginVertical: 10,
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 10,
-              height: 14,
-            },
-            shadowOpacity: 0.3,
-            shadowRadius: 6,
-            elevation: 12,
-            width: 80,
-            height: 80,
-            borderRadius: 40,
-            backgroundColor: activeColor.mainColor,
-            marginVertical: 20,
-          },
+          
           powerButton: {
             justifyContent: 'center',
             alignItems: 'center',
@@ -68,9 +51,9 @@ const useThemeStyles=(theme)=>{
             borderColor: '#2E8B57',
           },// switches
           switchContainer:{
-            flex:1,
             alignItems:"center",
-            marginTop:20
+            marginTop:20,
+            marginBottom:20
           },
           switchOne:{
             transform: [{ scaleX: 4 }, { scaleY: 3.8 }],
@@ -112,23 +95,16 @@ const useThemeStyles=(theme)=>{
           flexDirection:"row"
           },
           led1:{
-            width:60,
+            width:80,
             height:20,
             borderTopLeftRadius:15
           },
-          led2:{
-            width:60,
-            height:20,
-            backgroundColor:activeColor.darkColor,
-            borderColor:"#000",
-            borderLeftWidth:2,
-            borderRightWidth:2
-          },
           led3:{
-            width:60,
+            width:80,
             height:20,
             backgroundColor:activeColor.darkColor,
-            borderBottomRightRadius:15
+            borderBottomRightRadius:15,
+            borderLeftWidth:2
           },
           ledOneOn:{
             backgroundColor:"red"
@@ -147,16 +123,45 @@ const useThemeStyles=(theme)=>{
           },
           ledThreeOff:{
             backgroundColor:Colors.darkColor
-          },
-
-
+            },
           //lock container
           lockContainer:{
             flex:1,
+            width:"100%",
+            height:30,
+            margin:0,
+            flex:1,
+            alignItems:"center",
+          },
+          row1:{
             width:"80%",
-            marginTop:80,
+            justifyContent:"center",
             flexDirection:"row",
-            justifyContent:"space-between",
+            margin:0,
+            padding:0,
+          },
+          row2:{
+            width:"80%",
+            justifyContent:"center",
+            flexDirection:"row",
+            margin:0,
+            padding:0
+          },
+          button: {
+            height: 70,
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 120,
+            height: 75,
+            borderRadius: 0,
+            backgroundColor: activeColor.mainColor,
+            margin:1
+          },
+          lockBtn:{
+            borderTopLeftRadius:40
+          },
+          glassBtn:{
+            borderBottomRightRadius:40
           },
           // tempretaure
           tempContainer:{

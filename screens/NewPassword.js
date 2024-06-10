@@ -140,7 +140,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
           />
           </View>
           <View style={Styles.loginFieldContainer}>
-          <MaterialCommunityIcons name="wifi-cog" size={23} color="#fff" />
+          <MaterialCommunityIcons name="wifi-cog" size={23} color={activeColor.fontColor} />
           <TextInput
             style={{...Styles.textboxtext,flex:1}}
             placeholder="اسم جديد للشبكة"

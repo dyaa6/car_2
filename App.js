@@ -64,7 +64,7 @@ export default function App() {
 
   const updateTheme = (newTheme) => {
     if (!newTheme) {
-      newTheme = "color1";
+      newTheme = "color3";
     }
     setTheme({ mode: newTheme });
     storeData("appTheme", newTheme);
