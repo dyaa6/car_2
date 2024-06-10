@@ -3,7 +3,6 @@ import { ThemeContext } from "../components/ThemeContect";
 import useThemeStyles from "../components/Styles";
 import { Text, View, Switch,TextInput,TouchableOpacity } from 'react-native'
 import Colors from "../components/Colors";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Timer=({ navigation })=>{
     const {theme}=useContext(ThemeContext);
@@ -21,112 +20,40 @@ const Timer=({ navigation })=>{
 
 useEffect(() => {
     new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        const url = 'http://192.168.4.1/dev_ver';
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                if(parseInt(xhr.responseText)<4){
-                  setMsg("عذراً، هذه الميزة ليست متوفرة لديك!");
-                  navigation.navigate("الرئيسية");
-                }
-                else{
-                  new Promise((resolve, reject) => {
-                    const xhr = new XMLHttpRequest();
-                    const url = 'http://192.168.4.1/timerState';
-                    xhr.onreadystatechange = () => {
-                      if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                          if(xhr.responseText.split("#")[1]=="on"){
-                            setIsenabled(true);
-                            setTimeValue(parseInt(xhr.responseText.split("#")[0])/60);
-                          }
-                          else{
-                            setIsenabled(false);
-                          }
-                        } else {
-                          setMsg("هناك خطأ ما !");
-                          setsucsess(false);
-                          setIsLoading(false);
-                        }
-                      }
-                    };
-                    xhr.open('GET', url, true);
-                    xhr.timeout = 2000; // set the timeout to 2 seconds
-                    xhr.send();
-                  });
-
-
-                }
-            } else {
-              setMsg("لايمكن الاتصال بالسيارة!");
-            }
-          }
-        };
-        xhr.open('GET', url, true);
-        xhr.timeout = 1000;
-        xhr.send();
-      })
-      .catch((error) => {
-        setMsg(true);
-      });
-    },[]);
-
-const getDevPass = async () => {
-    try {
-      // Retrieve the value using the key 'devPass'
-      const devPass = await AsyncStorage.getItem('devPass');
-        if (devPass !== null) {
-        return devPass;
-      } else {
-        setMsg('لم تقم بتسجيل الدخول!');
-        return null;
-      }
-    } catch (error) {
-      setMsg('هناك خطأ ما', error);
-      return null;
-    }
-  };
-const sendRequest = () => {
-    return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = 'http://192.168.4.1/passwdx';
-  
+      const url = 'http://2.2.2.2/timerState';
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            resolve(xhr.responseText);
+            if(xhr.responseText.split("#")[1]=="on"){
+              setIsenabled(true);
+              setTimeValue(parseInt(xhr.responseText.split("#")[0])/60);
+            }
+            else{
+              setIsenabled(false);
+            }
           } else {
-            setMsg("لايمكن الاتصال بالسيارة!");
+            setMsg("لايوجد اتصال بالسيارة!");
             setsucsess(false);
             setIsLoading(false);
           }
         }
       };
-  
       xhr.open('GET', url, true);
       xhr.timeout = 2000; // set the timeout to 2 seconds
       xhr.send();
     });
-  };
+
+    },[]);
+
+
 const setTimer=async ()=>{
     setIsLoading(true);
     try {
-      const response = await sendRequest();
-      const savedPass = await getDevPass();
-      //setResponseText(response);
-      if (timeValue === '' || timeValue === 0) {
-        setMsg('يجب أن تدخل قيمة');
-        setsucsess(false);
-        setIsLoading(false);
-        return;
-      }
-  
-      if (response === savedPass) {
         if(isEnabled){
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/setUpTimer?value='+timeValue*60+'&state=on';
+          const url = 'http://2.2.2.2/setTimer?timeValue='+timeValue*60+'&state=on';
           xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
               if (xhr.status === 200) {
@@ -136,7 +63,7 @@ const setTimer=async ()=>{
                       setIsLoading(false);
                   }
               } else {
-                setMsg("هناك خطأ ما !");
+                setMsg("لايوجد اتصال بالسيارة!");
                 setsucsess(false);
                 setIsLoading(false);
               }
@@ -151,7 +78,7 @@ const setTimer=async ()=>{
         else{//not enabled
           new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            const url = 'http://192.168.4.1/setUpTimer?value=0&state=off';
+            const url = 'http://2.2.2.2/setTimer?timeValue=0&state=off';
             xhr.onreadystatechange = () => {
               if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
@@ -161,7 +88,7 @@ const setTimer=async ()=>{
                         setIsLoading(false);
                     }
                 } else {
-                  setMsg("هناك خطأ ما !");
+                  setMsg("لايوجد اتصال بالسيارة!");
                   setsucsess(false);
                   setIsLoading(false);
                 }
@@ -172,15 +99,6 @@ const setTimer=async ()=>{
             xhr.send();
           });
         }
-      } else {
-        setIsLoading(false);
-        setsucsess(false);
-        await AsyncStorage.removeItem('devPass');
-        await AsyncStorage.removeItem('isloggedin');
-        navigation.navigate('تسجيل الدخول');
-        return;
-      }
-  
       setIsLoading(false);
     } catch (error) {
       setMsg(error);

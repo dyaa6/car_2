@@ -12,6 +12,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword1, setNewPassword1] = useState('');
     const [newPassword2, setNewPassword2] = useState('');
+    const [newSSID, setNewSSID] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [responseText, setResponseText] = useState('');
     const [msg,setMsg]=useState('');
@@ -20,27 +21,17 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
     let activeColor=Colors[theme.mode];
     const Styles = useThemeStyles(theme);
 
-    //logout function
-    const handleLogout = async () => {
-        await AsyncStorage.removeItem('isloggedin');
-        // Navigate to the Login screen
-        setOldPassword('');
-        setNewPassword1('');
-        setNewPassword2('');
-        setMsg('');
-        navigation.navigate('تسجيل الدخول');
-      };
 
-    const changeThePassword=()=>{
+
+    const saveChanges=()=>{
         new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            const url = 'http://192.168.4.1/newpasswdx?newpassword='+newPassword1;
+            const url = 'http://2.2.2.2/networkConfig?pass='+'&ssid=' + newSSID;
             xhr.onreadystatechange = () => {
               if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     if(xhr.responseText=="Password updated"){
                         setMsg('تم تغيير كلمة السر بنجاح😘');
-                        handleLogout();
                     }
                 } else {
                   setMsg("لايمكن الاتصال بالسيارة!");
@@ -56,7 +47,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
     const sendRequest = () => {
         return new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/passwdx';
+          const url = 'http://2.2.2.2/currentPassword';
       
           xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
@@ -80,27 +71,24 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
           const response = await sendRequest();
           setResponseText(response);
       
-          if (oldPassword === '' || newPassword1 === '' || newPassword2 === '') {
+          if (oldPassword === '' || newPassword1 === '' || newPassword2 === '' || newSSID === '') {
             setMsg('يجب أن تملأ جميع الحقول');
             setIsLoading(false);
             return;
           }
-      
+          else{
           if (response === oldPassword) {
             if(newPassword1===newPassword2){
                 // send request to change the password
-                changeThePassword();
+                saveChanges();
             }else{
-                setMsg('إدخالات مختلفة')
+                setMsg('إدخالات مختلفة');
             }
-            //setMsg('لقد قمت بتسجيل الدخول بنجاح');
-            // AsyncStorage.setItem('isloggedin','true');
-            // AsyncStorage.setItem('devPass',response.toString());
-            // AsyncStorage.setItem('userName',username);
-            // navigation.navigate("الرئيسية");
+            
           } else {
             setMsg('كلمة السر غير صحيحة!');
           }
+        }
       
           setIsLoading(false);
         } catch (error) {
@@ -112,7 +100,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
     return(
         <View style={{...Styles.formContainer,...Styles.body,padding:120}}>
         <Text style={Styles.title}>
-          تغيير كلمة السر
+          اعدادات الشبكة الخاصة بالجهاز
         </Text>
 
         <Text> </Text>
@@ -151,6 +139,17 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
             maxLength={30}
           />
           </View>
+          <View style={Styles.loginFieldContainer}>
+          <MaterialCommunityIcons name="wifi-cog" size={23} color="#fff" />
+          <TextInput
+            style={{...Styles.textboxtext,flex:1}}
+            placeholder="اسم جديد للشبكة"
+            placeholderTextColor={activeColor.placeHoleder}
+            value={newSSID}
+            onChangeText={setNewSSID}
+            maxLength={30}
+          />
+          </View>
         <View style={{flexDirection:'row-reverse'}}>
           <TouchableOpacity style={{marginRight:10}}
           onPress={()=>{setShowPassword(!showPassword)}}
@@ -159,7 +158,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
           </TouchableOpacity>
 
           <TouchableOpacity style={{marginRight:10}}
-          onPress={()=>{setOldPassword(''),setNewPassword1(''),setNewPassword2('')}}
+          onPress={()=>{setOldPassword(''),setNewPassword1(''),setNewPassword2(''),setNewSSID('')}}
           >
           <Ionicons name="close-sharp" size={24} color={activeColor.fontColor} />
           </TouchableOpacity>

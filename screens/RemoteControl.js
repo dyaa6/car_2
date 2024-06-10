@@ -31,56 +31,12 @@ import { FontAwesome } from '@expo/vector-icons';
     const Styles = useThemeStyles(theme);
 
 
-const checkLoginStatus= async ()=>{
-  try {
-    const devPass = await AsyncStorage.getItem('devPass');
-    const isloggedin = await AsyncStorage.getItem('isloggedin');
-    setSavedPass(devPass);
-        //check if it's you
-        new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/passwdx';
-        
-          xhr.onreadystatechange = async () => {
-            if (xhr.readyState === 4) {
-              if (xhr.status === 200) {
-                resolve(xhr.responseText);
-                setDevicePass(xhr.responseText);
-                setMsgState(false);
-                if (!(xhr.responseText == devPass)) {
-                  await AsyncStorage.removeItem('devPass');
-                  await AsyncStorage.removeItem('isloggedin');
-                  navigation.navigate('تسجيل الدخول');
-                  return;
-                }
-              } else {
-                setMsg("لا يمكن الإتصال بالسيارة");
-                setMsgState(true);
-                reject("error"); // Handle the rejection here
-              }
-            }
-          };
-        
-          xhr.open('GET', url, true);
-          xhr.timeout = 500; // set the timeout to 2 seconds
-          xhr.send();
-        })
-          .catch((error) => {
-            setMsgState(true);
-          });    
 
-    if (isloggedin == null) {
-      navigation.navigate('تسجيل الدخول');
-    }
-  } catch (e) {
-    setMsg('Error reading AsyncStorage value:', e);
-  }
-}
 
   const updateKeys=()=>{
     new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        const url = 'http://192.168.4.1/codesData';
+        const url = 'http://2.2.2.2/codesData';
     
         xhr.onreadystatechange = async() => {
           if (xhr.readyState === 4) {
@@ -108,12 +64,11 @@ const checkLoginStatus= async ()=>{
       });
     }
     useEffect(() => {
-      checkLoginStatus();
         updateKeys();
         //check if the device is support this feature
         new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            const url = 'http://192.168.4.1/dev_ver';
+            const url = 'http://2.2.2.2/dev_ver';
             xhr.onreadystatechange = () => {
               if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
@@ -145,7 +100,7 @@ const checkLoginStatus= async ()=>{
       
         new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            const url = 'http://192.168.4.1';
+            const url = 'http://2.2.2.2';
         
             xhr.onreadystatechange = async() => {
               if (xhr.readyState === 4) {
@@ -171,190 +126,101 @@ const checkLoginStatus= async ()=>{
     return ()=> clearInterval(interval);
   }, []);
 
-        const auth=async (name,wt)=>{
-          try {
-            const devPass = await AsyncStorage.getItem('devPass');
-            const isloggedin = await AsyncStorage.getItem('isloggedin');
-            setSavedPass(devPass);
-                //check if it's you
-                new Promise((resolve, reject) => {
-                  const xhr = new XMLHttpRequest();
-                  const url = 'http://192.168.4.1/passwdx';
-                
-                  xhr.onreadystatechange = async () => {
-                    if (xhr.readyState === 4) {
-                      if (xhr.status === 200) {
-                        resolve(xhr.responseText);
-                        setDevicePass(xhr.responseText);
-                        setMsgState(false);
-                        if (!(xhr.responseText == devPass)) {
-                          await AsyncStorage.removeItem('devPass');
-                          await AsyncStorage.removeItem('isloggedin');
-                          navigation.navigate('تسجيل الدخول');
-                          return;
-                        }
-                        else{ //new
-                          switch(wt){
-                            case 'power':
-                                setPowerWaiting(true);
-                                break;
-                            case 'run':
-                                setRunWaiting(true);
-                                break;
-                            case 'open':
-                                setOpenWaiting(true);
-                                break;
-                            case 'lock':
-                                setLockWaiting(true);
-                                break;
-                            case 'box':
-                                setBoxWaiting(true);
-                                break;
-                        }
-                        new Promise((resolve, reject) => {
-                            const xhr = new XMLHttpRequest();
-                            const url = 'http://192.168.4.1/'+name;
-                            xhr.onreadystatechange = () => {
-                              if (xhr.readyState === 4) {
-                                if (xhr.status === 200) {
-                                    updateKeys();
-                                    switch(wt){
-                                        case 'power':
-                                            setPowerWaiting(false);
-                                            break;
-                                        case 'run':
-                                            setRunWaiting(false);
-                                            break;
-                                        case 'open':
-                                            setOpenWaiting(false);
-                                            break;
-                                        case 'lock':
-                                            setLockWaiting(false);
-                                            break;
-                                        case 'box':
-                                          setBoxWaiting(false);
-                                          break;
-                                    }
-                                } else {
-                                  setMsgState(true);
-                                  setMsg("لايمكن الاتصال بالسيارة!");
-                                  switch(wt){
-                                    case 'power':
-                                        setPowerWaiting(false);
-                                        break;
-                                    case 'run':
-                                        setRunWaiting(false);
-                                        break;
-                                    case 'open':
-                                        setOpenWaiting(false);
-                                        break;
-                                    case 'lock':
-                                        setLockWaiting(false);
-                                        break;
-                                    case 'box':
-                                      setBoxWaiting(false);
-                                      break;
-                                }
-                                }
-                              }
-                            };
-                            xhr.open('GET', url, true);
-                            xhr.timeout = 300; // set the timeout to 2 seconds
-                            xhr.send();
-                          })
-                          .catch((error) => {
-                            setMsgState(true);
-                          });
-                        }
-                      } else {
-                        setMsg("لا يمكن الإتصال بالسيارة");
-                        setMsgState(true);
-                        reject("error"); // Handle the rejection here
-                      }
-                    }
-                  };
-                
-                  xhr.open('GET', url, true);
-                  xhr.timeout = 500; // set the timeout to 2 seconds
-                  xhr.send();
-                })
-                  .catch((error) => {
-                    setMsgState(true);
-                  });    
-        
-            if (isloggedin == null) {
-              navigation.navigate('تسجيل الدخول');
+        const auth=async (wt)=>{
+              switch(wt){
+                case 'authPower':
+                    setPowerWaiting(true);
+                    break;
+                case 'authRun':
+                    setRunWaiting(true);
+                    break;
+                case 'authOpen':
+                    setOpenWaiting(true);
+                    break;
+                case 'authLock':
+                    setLockWaiting(true);
+                    break;
+                case 'authBox':
+                    setBoxWaiting(true);
+                    break;
             }
-          } catch (e) {
-            setMsg('Error reading AsyncStorage value:', e);
-          }
+            new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                const url = 'http://2.2.2.2/'+wt;
+                xhr.onreadystatechange = () => {
+                  if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        updateKeys();
+                        switch(wt){
+                            case 'authPower':
+                                setPowerWaiting(false);
+                                break;
+                            case 'authRun':
+                                setRunWaiting(false);
+                                break;
+                            case 'authOpen':
+                                setOpenWaiting(false);
+                                break;
+                            case 'authLock':
+                                setLockWaiting(false);
+                                break;
+                            case 'authBox':
+                              setBoxWaiting(false);
+                              break;
+                        }
+                    } else {
+                      setMsgState(true);
+                      setMsg("لايمكن الاتصال بالسيارة!");
+                      switch(wt){
+                        case 'authPower':
+                            setPowerWaiting(false);
+                            break;
+                        case 'authRun':
+                            setRunWaiting(false);
+                            break;
+                        case 'authOpen':
+                            setOpenWaiting(false);
+                            break;
+                        case 'authLock':
+                            setLockWaiting(false);
+                            break;
+                        case 'authBox':
+                          setBoxWaiting(false);
+                          break;
+                    }
+                    }
+                  }
+                };
+                xhr.open('GET', url, true);
+                xhr.timeout = 300; // set the timeout to 2 seconds
+                xhr.send();
+              })
+              .catch((error) => {
+                setMsgState(true);
+              });
+               
         }
 
     const reset=async (button)=>{
-      try {
-        const devPass = await AsyncStorage.getItem('devPass');
-        const isloggedin = await AsyncStorage.getItem('isloggedin');
-        setSavedPass(devPass);
-            //check if it's you
-            new Promise((resolve, reject) => {
-              const xhr = new XMLHttpRequest();
-              const url = 'http://192.168.4.1/passwdx';
-            
-              xhr.onreadystatechange = async () => {
-                if (xhr.readyState === 4) {
-                  if (xhr.status === 200) {
-                    resolve(xhr.responseText);
-                    setDevicePass(xhr.responseText);
-                    setMsgState(false);
-                    if (!(xhr.responseText == devPass)) {
-                      await AsyncStorage.removeItem('devPass');
-                      await AsyncStorage.removeItem('isloggedin');
-                      navigation.navigate('تسجيل الدخول');
-                      return;
-                    }
-                    else{
-                      new Promise((resolve, reject) => {
-                        const xhr = new XMLHttpRequest();
-                        const url = 'http://192.168.4.1/'+button;
-                        xhr.onreadystatechange = () => {
-                          if (xhr.readyState === 4) {
-                            if (xhr.status === 200) {
-                                setTimeout(()=>{
-                                    updateKeys();
-                                },500);
-                            } 
-                          }
-                        };
-                        xhr.open('GET', url, true);
-                        xhr.timeout = 300; // set the timeout to 2 seconds
-                        xhr.send();
-                      })
-                      .catch((error) => {
-                        setMsgState(true);
-                      });
-                    }
-                  } else {
-                    setMsg("لا يمكن الإتصال بالسيارة");
-                    setMsgState(true);
-                    reject("error"); // Handle the rejection here
-                  }
-                }
-              };
-            
-              xhr.open('GET', url, true);
-              xhr.timeout = 500; // set the timeout to 2 seconds
-              xhr.send();
-            })
-              .catch((error) => {
-                setMsgState(true);
-              });    
-    
-        if (isloggedin == null) {
-          navigation.navigate('تسجيل الدخول');
-        }
-      } catch (e) {
-        setMsg('Error reading AsyncStorage value:', e);
-      }    
+      new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const url = 'http://2.2.2.2/'+button;
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                setTimeout(()=>{
+                    updateKeys();
+                },500);
+            } 
+          }
+        };
+        xhr.open('GET', url, true);
+        xhr.timeout = 300; // set the timeout to 2 seconds
+        xhr.send();
+      })
+      .catch((error) => {
+        setMsgState(true);
+      });
   }
     return(
     <ScrollView style={Styles.body}>
@@ -367,7 +233,7 @@ const checkLoginStatus= async ()=>{
           <Text style={Styles.messageText}>{notSupport}</Text>
         </View>
         <TouchableOpacity 
-            onPress={()=>{auth('authPowerwdx','power')}}
+            onPress={()=>{auth('authPower')}}
             style={{...Styles.pannel,backgroundColor: powerWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
                   <Text style={Styles.pannelFontMid}>إطفاء</Text>
@@ -378,7 +244,7 @@ const checkLoginStatus= async ()=>{
                 </Text></View>
                 <View style={Styles.codeContainer}>
                     <TouchableOpacity 
-                    onPress={()=>{reset('resetPowerwdx')}}
+                    onPress={()=>{reset('resetPower')}}
                     style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                         تصفير
                         </Text></TouchableOpacity>
@@ -386,7 +252,7 @@ const checkLoginStatus= async ()=>{
                 </View>
         </TouchableOpacity>
           <TouchableOpacity 
-            onPress={()=>{auth('authRunwdx','run')}}
+            onPress={()=>{auth('authRun')}}
             style={{...Styles.pannel,backgroundColor: runWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
                   <Text style={Styles.pannelFontMid}>تشغيل</Text>
@@ -397,7 +263,7 @@ const checkLoginStatus= async ()=>{
                     </Text></View>
                     <View style={Styles.codeContainer}>
                         <TouchableOpacity 
-                        onPress={()=>{reset('resetRunwdx')}}
+                        onPress={()=>{reset('resetRun')}}
                         style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                             تصفير
                             </Text></TouchableOpacity>
@@ -405,7 +271,7 @@ const checkLoginStatus= async ()=>{
                     </View>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress={()=>{auth('authOpenwdx','open')}}
+            onPress={()=>{auth('authOpen')}}
             style={{...Styles.pannel,backgroundColor: openWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
                   <Text style={Styles.pannelFontMid}>فتح</Text>
@@ -416,7 +282,7 @@ const checkLoginStatus= async ()=>{
                     </Text></View>
                     <View style={Styles.codeContainer}>
                         <TouchableOpacity 
-                        onPress={()=>{reset('resetOpenwdx')}}
+                        onPress={()=>{reset('resetOpen')}}
                         style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                             تصفير
                             </Text></TouchableOpacity>
@@ -424,7 +290,7 @@ const checkLoginStatus= async ()=>{
                     </View>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress={()=>{auth('authLockwdx','lock')}}
+            onPress={()=>{auth('authLock')}}
             style={{...Styles.pannel,backgroundColor: lockWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
                   <Text style={Styles.pannelFontMid}>قفل</Text>
@@ -435,7 +301,7 @@ const checkLoginStatus= async ()=>{
                     </Text></View>
                     <View style={Styles.codeContainer}>
                         <TouchableOpacity 
-                        onPress={()=>{reset('resetLockwdx')}}
+                        onPress={()=>{reset('resetLock')}}
                         style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                             تصفير
                             </Text></TouchableOpacity>
@@ -443,7 +309,7 @@ const checkLoginStatus= async ()=>{
                     </View>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress={()=>{auth('authBoxwdx','box')}}
+            onPress={()=>{auth('authBox')}}
             style={{...Styles.pannel,backgroundColor: boxWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
                   <Text style={Styles.pannelFontMid}>الصندوق</Text>
@@ -454,7 +320,7 @@ const checkLoginStatus= async ()=>{
                     </Text></View>
                     <View style={Styles.codeContainer}>
                         <TouchableOpacity 
-                        onPress={()=>{reset('resetBoxwdx')}}
+                        onPress={()=>{reset('resetBox')}}
                         style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                             تصفير
                             </Text></TouchableOpacity>
@@ -462,7 +328,7 @@ const checkLoginStatus= async ()=>{
                     </View>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress={()=>{reset('resetAllwdx')}}
+            onPress={()=>{reset('resetAll')}}
             style={{...Styles.pannel,backgroundColor: Colors.thirdColor, alignItems:"center",marginBottom:70}}>
                 <Text style={[Styles.pannelFontMid,Styles.resetButtonFont]}>
                     تصفير الكل

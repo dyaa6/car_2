@@ -30,21 +30,14 @@ import { ThemeContext } from "../components/ThemeContect";
     style={{...Styles.body,flex:1,alignItems:"center"}}
     >            
       <TouchableOpacity 
-      onPress={()=>navigation.navigate("كلمة سر جديدة")}
+      onPress={()=>navigation.navigate("اعدادات الشبكة")}
       style={{...Styles.tochable}}>
-                <MaterialCommunityIcons name="form-textbox-password" size={28} color="#fff" />
+                <MaterialCommunityIcons name="wifi-cog" size={28} color="#fff" />
         <Text style={Styles.tochableColor}>
-        تغيير كلمة السر
+        إعدادات الشبكة
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity 
-      onPress={()=>navigation.navigate("تغيير اسم الشبكة")}
-      style={Styles.tochable}>
-        <MaterialCommunityIcons name="wifi-cog" size={28} color="#fff" />
-        <Text style={Styles.tochableColor}>
-        تغيير اسم الشبكة
-        </Text>
-      </TouchableOpacity>
+
       <TouchableOpacity 
       onPress={()=>navigation.navigate("ريموت كُنترول")}
       style={Styles.tochable}>

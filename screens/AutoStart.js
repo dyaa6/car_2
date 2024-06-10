@@ -22,7 +22,7 @@ const AutoStart=({ navigation })=>{
 useEffect(() => {
     new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        const url = 'http://192.168.4.1/dev_ver';
+        const url = 'http://2.2.2.2/dev_ver';
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
             if (xhr.status === 200) {
@@ -33,7 +33,7 @@ useEffect(() => {
                 else{
                   new Promise((resolve, reject) => {
                     const xhr = new XMLHttpRequest();
-                    const url = 'http://192.168.4.1/autoState';
+                    const url = 'http://2.2.2.2/autoState';
                     xhr.onreadystatechange = () => {
                       if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
@@ -91,7 +91,7 @@ const getDevPass = async () => {
 const sendRequest = () => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = 'http://192.168.4.1/passwdx';
+      const url = 'http://2.2.2.2/passwdx';
   
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
@@ -126,7 +126,7 @@ const setAuto=async ()=>{
         if(isEnabled){
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/setUpAuto?numOfTries='+tryValue+'&state=on';
+          const url = 'http://2.2.2.2/setUpAuto?numOfTries='+tryValue+'&state=on';
           xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
               if (xhr.status === 200) {
@@ -151,7 +151,7 @@ const setAuto=async ()=>{
         else{//not enabled
           new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            const url = 'http://192.168.4.1/setUpAuto?numOfTries=0&state=off';
+            const url = 'http://2.2.2.2/setUpAuto?numOfTries=0&state=off';
             xhr.onreadystatechange = () => {
               if (xhr.readyState === 4) {
                 if (xhr.status === 200) {

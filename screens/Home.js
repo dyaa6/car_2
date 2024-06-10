@@ -46,7 +46,7 @@ const Styles = useThemeStyles(theme);
       checkLoginStatus();
       new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        const url = 'http://192.168.4.1/statewdx';
+        const url = 'http://2.2.2.2/statewdx';
     
         xhr.onreadystatechange = async() => {
           if (xhr.readyState === 4) {
@@ -152,7 +152,7 @@ const Styles = useThemeStyles(theme);
         //check if it's you
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/passwdx';
+          const url = 'http://2.2.2.2/passwdx';
       
           xhr.onreadystatechange = async () => {
             if (xhr.readyState === 4) {
@@ -168,7 +168,7 @@ const Styles = useThemeStyles(theme);
                   //send the request
                           new Promise((resolve, reject) => {
                             const xhr = new XMLHttpRequest();
-                            const url = 'http://192.168.4.1/opennwdx';
+                            const url = 'http://2.2.2.2/opennwdx';
                         
                             xhr.onreadystatechange = () => {
                               if (xhr.readyState === 4) {
@@ -213,7 +213,7 @@ const Styles = useThemeStyles(theme);
         //check if it's you
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/passwdx';
+          const url = 'http://2.2.2.2/passwdx';
       
           xhr.onreadystatechange = async () => {
             if (xhr.readyState === 4) {
@@ -229,7 +229,7 @@ const Styles = useThemeStyles(theme);
                   //send the request
                           new Promise((resolve, reject) => {
                             const xhr = new XMLHttpRequest();
-                            const url = 'http://192.168.4.1/lockkwdx';
+                            const url = 'http://2.2.2.2/lockkwdx';
                         
                             xhr.onreadystatechange = () => {
                               if (xhr.readyState === 4) {
@@ -274,7 +274,7 @@ const Styles = useThemeStyles(theme);
         //check if it's you
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/passwdx';
+          const url = 'http://2.2.2.2/passwdx';
       
           xhr.onreadystatechange = async () => {
             if (xhr.readyState === 4) {
@@ -290,7 +290,7 @@ const Styles = useThemeStyles(theme);
                   //send the request
                           new Promise((resolve, reject) => {
                             const xhr = new XMLHttpRequest();
-                            const url = 'http://192.168.4.1/boxxwdx';
+                            const url = 'http://2.2.2.2/boxxwdx';
                         
                             xhr.onreadystatechange = () => {
                               if (xhr.readyState === 4) {
@@ -330,7 +330,7 @@ const Styles = useThemeStyles(theme);
 
     new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = 'http://192.168.4.1/passwdx';
+      const url = 'http://2.2.2.2/passwdx';
       xhr.onreadystatechange = async () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
@@ -345,7 +345,7 @@ const Styles = useThemeStyles(theme);
               if(!isEnabled2){ //فتح سويج
                 new Promise((resolve, reject) => {
                   const xhr = new XMLHttpRequest();
-                  const url = 'http://192.168.4.1/sw1on';
+                  const url = 'http://2.2.2.2/sw1on';
               
                   xhr.onreadystatechange = () => {
                     if (xhr.readyState === 4) {
@@ -367,7 +367,7 @@ const Styles = useThemeStyles(theme);
 
                 new Promise((resolve, reject) => {
                   const xhr = new XMLHttpRequest();
-                  const url = 'http://192.168.4.1/sw2on';
+                  const url = 'http://2.2.2.2/sw2on';
               
                   xhr.onreadystatechange = () => {
                     if (xhr.readyState === 4) {
@@ -392,7 +392,7 @@ const Styles = useThemeStyles(theme);
               //send the request
               new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
-                const url = 'http://192.168.4.1/run_on';
+                const url = 'http://2.2.2.2/run_on';
             
                 xhr.onreadystatechange = () => {
                   if (xhr.readyState === 4) {
@@ -434,7 +434,7 @@ const Styles = useThemeStyles(theme);
     //setLedThree(false);
     new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = 'http://192.168.4.1/run_off';
+      const url = 'http://2.2.2.2/run_off';
   
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
@@ -463,7 +463,7 @@ const switchOneOn=async()=>{
     //check if it's you
     new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = 'http://192.168.4.1/passwdx';
+      const url = 'http://2.2.2.2/passwdx';
   
       xhr.onreadystatechange = async () => {
         if (xhr.readyState === 4) {
@@ -479,7 +479,7 @@ const switchOneOn=async()=>{
               //send the request
                       new Promise((resolve, reject) => {
                         const xhr = new XMLHttpRequest();
-                        const url = 'http://192.168.4.1/sw1on';
+                        const url = 'http://2.2.2.2/sw1on';
                     
                         xhr.onreadystatechange = () => {
                           if (xhr.readyState === 4) {
@@ -521,7 +521,7 @@ const switchOneOn=async()=>{
         //check if it's you
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/passwdx';
+          const url = 'http://2.2.2.2/passwdx';
       
           xhr.onreadystatechange = async () => {
             if (xhr.readyState === 4) {
@@ -537,7 +537,7 @@ const switchOneOn=async()=>{
                   //send the request
                           new Promise((resolve, reject) => {
                             const xhr = new XMLHttpRequest();
-                            const url = 'http://192.168.4.1/sw1off';
+                            const url = 'http://2.2.2.2/sw1off';
                         
                             xhr.onreadystatechange = () => {
                               if (xhr.readyState === 4) {
@@ -581,7 +581,7 @@ const switchTwoOn=()=>{
         //check if it's you
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/passwdx';
+          const url = 'http://2.2.2.2/passwdx';
       
           xhr.onreadystatechange = async () => {
             if (xhr.readyState === 4) {
@@ -597,7 +597,7 @@ const switchTwoOn=()=>{
                   //send the request
                           new Promise((resolve, reject) => {
                             const xhr = new XMLHttpRequest();
-                            const url = 'http://192.168.4.1/sw2on';
+                            const url = 'http://2.2.2.2/sw2on';
                         
                             xhr.onreadystatechange = () => {
                               if (xhr.readyState === 4) {
@@ -637,7 +637,7 @@ const switchTwoOn=()=>{
         //check if it's you
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://192.168.4.1/passwdx';
+          const url = 'http://2.2.2.2/passwdx';
       
           xhr.onreadystatechange = async () => {
             if (xhr.readyState === 4) {
@@ -653,7 +653,7 @@ const switchTwoOn=()=>{
                   //send the request
                           new Promise((resolve, reject) => {
                             const xhr = new XMLHttpRequest();
-                            const url = 'http://192.168.4.1/sw2off';
+                            const url = 'http://2.2.2.2/sw2off';
                         
                             xhr.onreadystatechange = () => {
                               if (xhr.readyState === 4) {
