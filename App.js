@@ -75,95 +75,94 @@ export default function App() {
   }, []);
 
   return (
-    <View>
-      <Text>here is our app</Text>
-    </View>
     // <ThemeContext.Provider value={{ theme, updateTheme }}>
-    //   <NavigationContainer>
-    //     <Drawer.Navigator
-    //       initialRouteName='Home'
-    //       drawerContent={props => <CustomDrawerContent {...props} activeColor={activeColor} />}
-    //       screenOptions={{
-    //         headerShown: true,
-    //         headerStyle: { backgroundColor: activeColor.mainColor, borderBottomEndRadius: 20, borderBottomStartRadius: 20 },
-    //         drawerActiveTintColor: '#fff',
-    //         drawerInactiveTintColor: "#fff",
-    //         drawerStyle: { marginTop: 0 },
-    //         headerTitleStyle: { color: "#fff", fontWeight: "bold" },
-    //         headerTitleAlign: "center",
-    //         headerTintColor: "#fff",
-    //         drawerPosition: 'right',
-    //       }}
-    //     >
-    //       <Drawer.Screen name="الرئيسية" component={Home}
-    //         options={{
-    //           drawerIcon: ({ color, size }) => (
-    //             <FontAwesome name="home" color={color} size={size} />
-    //           ),
-    //         }} />
-    //       <Drawer.Screen name="الإعدادات" component={Settings}
-    //         options={{
-    //           drawerIcon: ({ color, size }) => (
-    //             <Ionicons name="settings-outline" size={size} color={color} />
-    //           ),
-    //           swipeEnabled: true,
-    //         }} />
-    //       <Drawer.Screen name="اعدادات الشبكة" component={NewPassword} 
-    //         options={{
-    //           drawerIcon: ({ color, size }) => (
-    //             <Ionicons name="reload" size={24} color={color} />
-    //           ),
-    //           swipeEnabled: true,
-    //           drawerItemStyle: { display: 'none' }
-    //         }} />
-    //       <Drawer.Screen name="ريموت كُنترول" component={Remote}
-    //         options={{
-    //           drawerIcon: ({ color, size }) => (
-    //             <Ionicons name="reload" size={24} color={color} />
-    //           ),
-    //           swipeEnabled: true,
-    //           drawerItemStyle: { display: 'none' }
-    //         }} />
-    //       <Drawer.Screen name="فصل بعد مدة" component={Timer}
-    //         options={{
-    //           drawerIcon: ({ color, size }) => (
-    //             <Ionicons name="reload" size={24} color={color} />
-    //           ),
-    //           swipeEnabled: true,
-    //           drawerItemStyle: { display: 'none' }
-    //         }} />
-    //       <Drawer.Screen name="تشغيل تلقائي" component={AutoStart}
-    //         options={{
-    //           drawerIcon: ({ color, size }) => (
-    //             <Ionicons name="reload" size={24} color={color} />
-    //           ),
-    //           swipeEnabled: true,
-    //           drawerItemStyle: { display: 'none' }
-    //         }} />
-    //       <Drawer.Screen name="ألوان التطبيق" component={Theme}
-    //         options={{
-    //           drawerIcon: ({ color, size }) => (
-    //             <Ionicons name="reload" size={24} color={color} />
-    //           ),
-    //           swipeEnabled: true,
-    //           drawerItemStyle: { display: 'none' }
-    //         }} />
-    //       <Drawer.Screen name="الأسئلة الشائعة" component={Questions}
-    //         options={{
-    //           drawerIcon: ({ color, size }) => (
-    //             <FontAwesome name="question-circle" size={24} color={color} />
-    //           ),
-    //           swipeEnabled: true,
-    //         }} />
-    //       <Drawer.Screen name="إتصل بنا" component={About} 
-    //         options={{
-    //           drawerIcon: ({ color, size }) => (
-    //             <Entypo name="info" size={24} color={color} />
-    //           ),
-    //           swipeEnabled: true,
-    //         }} />
-    //     </Drawer.Navigator>
-    //   </NavigationContainer>
+      <NavigationContainer>
+        <Drawer.Navigator
+          initialRouteName='Home'
+          drawerContent={props => <CustomDrawerContent {...props} activeColor={activeColor} />}
+          screenOptions={{
+            headerShown: true,
+            headerStyle: { backgroundColor: activeColor.mainColor, borderBottomEndRadius: 20, borderBottomStartRadius: 20 },
+            drawerActiveTintColor: '#fff',
+            drawerInactiveTintColor: "#fff",
+            drawerStyle: { marginTop: 0 },
+            headerTitleStyle: { color: "#fff", fontWeight: "bold" },
+            headerTitleAlign: "center",
+            headerTintColor: "#fff",
+            drawerPosition: 'right',
+          }}
+        >
+             
+          <Drawer.Screen name="الرئيسية" component={Home}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <FontAwesome name="home" color={color} size={size} />
+              ),
+            }} />
+         {/* 
+          <Drawer.Screen name="الإعدادات" component={Settings}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name="settings-outline" size={size} color={color} />
+              ),
+              swipeEnabled: true,
+            }} />
+          <Drawer.Screen name="اعدادات الشبكة" component={NewPassword} 
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name="reload" size={24} color={color} />
+              ),
+              swipeEnabled: true,
+              drawerItemStyle: { display: 'none' }
+            }} />
+          <Drawer.Screen name="ريموت كُنترول" component={Remote}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name="reload" size={24} color={color} />
+              ),
+              swipeEnabled: true,
+              drawerItemStyle: { display: 'none' }
+            }} />
+          <Drawer.Screen name="فصل بعد مدة" component={Timer}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name="reload" size={24} color={color} />
+              ),
+              swipeEnabled: true,
+              drawerItemStyle: { display: 'none' }
+            }} />
+          <Drawer.Screen name="تشغيل تلقائي" component={AutoStart}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name="reload" size={24} color={color} />
+              ),
+              swipeEnabled: true,
+              drawerItemStyle: { display: 'none' }
+            }} />
+          <Drawer.Screen name="ألوان التطبيق" component={Theme}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name="reload" size={24} color={color} />
+              ),
+              swipeEnabled: true,
+              drawerItemStyle: { display: 'none' }
+            }} />
+          <Drawer.Screen name="الأسئلة الشائعة" component={Questions}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <FontAwesome name="question-circle" size={24} color={color} />
+              ),
+              swipeEnabled: true,
+            }} />
+          <Drawer.Screen name="إتصل بنا" component={About} 
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Entypo name="info" size={24} color={color} />
+              ),
+              swipeEnabled: true,
+            }} /> */}
+        </Drawer.Navigator>
+      </NavigationContainer>
     // </ThemeContext.Provider>
   );
 }
