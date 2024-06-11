@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "car_2",
+    "name": "My Car",
     "slug": "car_2",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,10 +18,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.acsd.car2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6314f0e2-f34f-40aa-b7cd-6f785a6167fe"
+      }
     }
   }
 }

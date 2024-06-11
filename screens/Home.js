@@ -3,51 +3,38 @@ import { ThemeContext } from '../components/ThemeContect';
 import useThemeStyles from '../components/Styles';
 import { View,Text, TouchableOpacity,StatusBar,Switch,StyleSheet,ImageBackground,I18nManager,Image, Vibration } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from '../components/Colors';
 I18nManager.forceRTL(false);
 I18nManager.allowRTL(false);
-//import { Font } from 'expo';
 
 
 
-const Home = ({ navigation }) => {
-  const [isLoading1, setIsLoading1] = useState(false);
+const Home = () => {
   const [unlockActive, setUnlockActive] = useState(false);
   const [lockActive, setLockActive] = useState(false);
   const [boxActive, setBoxActive] = useState(false);
   const [GlassActive, setGlassActive] = useState(false);
   const [ledOne,setLedONe]=useState(false);
-  const [ledTwo,setLedTwo]=useState(false);
   const [ledThree,setLedThree]=useState(false);
   const [stateLed,setStateLed]=useState(false);
-  const [switchOneEnabled,setSwitchOneEnabled]=useState(true);
-  const [switchTwoEnabled,setSwitchTwoEnabled]=useState(false);
-  const [buttonOneEnabled,setButtonOneEnabled]=useState(true);
   const [errormsg,setErrormsg]=useState('the error text will be here');
   const [errormsgState,setErrormsgState]=useState(false);
-// switch 1
-const [isEnabled1, setIsEnabled1] = useState(false);//switch one is on
-const [isEnabled2, setIsEnabled2] = useState(false);// switch two is on
-const [pressed, setPressed] = useState(false);//run button
-const [mode,setMode]=useState(true);
-const [powerButtonDown,setPowerButtonDown]=useState(false);
-const [powerButtonUp,setPowerButtonUp]=useState(false);
-const [timer,setTimer]=useState('-');
-const [temp,setTemp]=useState('-');
-const [savedPass,setSavedPass]=useState('');
+  // switch 1
+  const [isEnabled1, setIsEnabled1] = useState(false);//switch one is on
+  const [pressed, setPressed] = useState(false);//run button
+  const [mode,setMode]=useState(true);
+  const [timer,setTimer]=useState('-');
 
-const {theme}=useContext(ThemeContext)
-let activeColor=Colors[theme.mode];
-const Styles = useThemeStyles(theme);
+  const {theme}=useContext(ThemeContext)
+  let activeColor=Colors[theme.mode];
+  const Styles = useThemeStyles(theme);
 
 // sycronisation
   useEffect(() => {
     const interval=setInterval(()=>{
-      //checkLoginStatus();
       new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        const url = 'http://2.2.2.2/statewdx';
+        const url = 'http://2.2.2.2/state';
     
         xhr.onreadystatechange = async() => {
           if (xhr.readyState === 4) {
@@ -62,19 +49,11 @@ const Styles = useThemeStyles(theme);
                 setLedONe(false);
                 setIsEnabled1(false);
                 }
-              if(xhr.responseText.split("#")[1]=="on"){
-              setLedTwo(true);
-              setIsEnabled2(true);
-              }
-              else{
-                setLedTwo(false);
-                setIsEnabled2(false);
-                }
-              if(xhr.responseText.split("#")[2]=="on")
+              if(xhr.responseText.split("#")[1]=="on")
               setLedThree(true);
               else
               setLedThree(false);
-              if(xhr.responseText.split("#")[3]=="on")
+              if(xhr.responseText.split("#")[2]=="on")
               setStateLed(true);
               else
               setStateLed(false);
@@ -84,15 +63,15 @@ const Styles = useThemeStyles(theme);
               setErrormsgState(true);
             }
             // set the timer
-            if(xhr.responseText.split("#")[5]!=undefined)
-              setTimer(formatTime(parseInt(xhr.responseText.split("#")[5])));
+            if(xhr.responseText.split("#")[3]!=undefined)
+              setTimer(formatTime(parseInt(xhr.responseText.split("#")[3])));
             else
               setTimer('-');
           }
         };
     
         xhr.open('GET', url, true);
-        xhr.timeout = 400; // set the timeout to 2 seconds
+        xhr.timeout = 400; 
         xhr.send();
       });
     },200);
@@ -109,11 +88,9 @@ const Styles = useThemeStyles(theme);
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
-  
     const formattedHours = hours < 10 ? `0${hours}` : `${hours}`;
     const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
     const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
-  
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   }
 
@@ -222,16 +199,14 @@ const Styles = useThemeStyles(theme);
           if (xhr.status === 200) {
             resolve(xhr.responseText);
             setErrormsgState(false);
-            ////setLedONe(true);
           } else {
-            //reject("لايوجد اتصال بالسيارة!");
             setErrormsg("لايوجد اتصال بالسيارة!");
             setErrormsgState(true);
           }
         }
       };
       xhr.open('GET', url, true);
-      xhr.timeout = 1000; // set the timeout to 2 seconds
+      xhr.timeout = 1000;
       xhr.send();
       });
   }; 
@@ -263,7 +238,6 @@ const Styles = useThemeStyles(theme);
   const handlePressIn = () => {
     setPressed(true);
     Vibration.vibrate(80);
-
     if(!isEnabled1){ //فتح سويج
       new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -367,8 +341,6 @@ const switchOneOn=async()=>{
     });
 }
   else{//switch one off
-    setIsEnabled2(false);
-    setButtonOneEnabled(true);
     new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const url = 'http://2.2.2.2/switch1Off';
@@ -431,15 +403,11 @@ const switchOneOn=async()=>{
       onPressOut={handlePressOut}
       activeOpacity={1}
       //disabled={buttonOneEnabled}
-      style={[Styles.runbutton,
-         {  backgroundColor: pressed ? activeColor.secondColor : activeColor.mainColor,
-            top: pressed? 5:0,
-            //opacity: buttonOneEnabled? 0.6:1
-        }]}
+      style={Styles.runbutton}
     >
-      <Text style={Styles.runButtonText}>
-        تشغيل
-      </Text>
+      <Image source={isEnabled1? require('../assets/btn_G.png'):require('../assets/btn_R.png')} 
+      style={{width:140,height:140,  transform:pressed? [{ scaleX: 1.05 }, { scaleY:1.05 }]:[{ scaleX: 1 }, { scaleY:1 }] ,transition: 'all 1s'}}
+      />
     </TouchableOpacity>
     </View>
       

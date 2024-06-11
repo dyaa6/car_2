@@ -30,21 +30,11 @@ const useThemeStyles=(theme)=>{
             marginVertical: 20,
             marginTop:100
           },
-          runbutton: {//that is with switches
-            borderRadius: 25,
-            height: 70,
+          runbutton: {
+            height: 100,
             justifyContent: 'center',
             alignItems: 'center',
-            paddingHorizontal: 50,
-            marginVertical: 10,
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 10,
-              height: 14,
-            },
-            shadowOpacity: 0.3,
-            shadowRadius: 6,
-            elevation: 12,
+            marginVertical: 20
           },
           buttonLoading: {
             borderWidth: 5,
@@ -152,10 +142,11 @@ const useThemeStyles=(theme)=>{
             justifyContent: 'center',
             alignItems: 'center',
             width: 120,
-            height: 75,
+            height: 66,
             borderRadius: 0,
             backgroundColor: activeColor.mainColor,
-            margin:1
+            margin:0.5,
+            padding:0
           },
           lockBtn:{
             borderTopLeftRadius:40
