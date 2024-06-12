@@ -75,9 +75,9 @@ export default function App() {
   }, []);
 
   return (
-    // <ThemeContext.Provider value={{ theme, updateTheme }}>
+   <ThemeContext.Provider value={{ theme, updateTheme }}>
       <NavigationContainer>
-        <Drawer.Navigator
+         <Drawer.Navigator
           initialRouteName='Home'
           drawerContent={props => <CustomDrawerContent {...props} activeColor={activeColor} />}
           screenOptions={{
@@ -92,14 +92,13 @@ export default function App() {
             drawerPosition: 'right',
           }}
         >
-             
-          <Drawer.Screen name="الرئيسية" component={Home}
+           <Drawer.Screen name="الرئيسية" component={Home}
             options={{
               drawerIcon: ({ color, size }) => (
                 <FontAwesome name="home" color={color} size={size} />
               ),
             }} />
-         {/* 
+         
           <Drawer.Screen name="الإعدادات" component={Settings}
             options={{
               drawerIcon: ({ color, size }) => (
@@ -160,9 +159,9 @@ export default function App() {
                 <Entypo name="info" size={24} color={color} />
               ),
               swipeEnabled: true,
-            }} /> */}
+            }} /> 
         </Drawer.Navigator>
       </NavigationContainer>
-    // </ThemeContext.Provider>
+     </ThemeContext.Provider>
   );
 }
