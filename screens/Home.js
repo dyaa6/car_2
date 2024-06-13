@@ -31,8 +31,8 @@ const Home = () => {
 
 // sycronisation
   useEffect(() => {
-    const interval=setInterval(()=>{
-      new Promise((resolve, reject) => {
+    const interval=setInterval(async ()=>{
+      await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         const url = 'http://2.2.2.2/state';
     
@@ -188,10 +188,10 @@ const Home = () => {
 
   
   
-  const handleGlassDown = () => {
+  const handleGlassDown = async () => {
     setGlassActive(true);
     Vibration.vibrate(80);
-    new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const url = 'http://2.2.2.2/glassDown';
       xhr.onreadystatechange = () => {
