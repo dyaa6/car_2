@@ -42,7 +42,7 @@ export default function App() {
   useEffect(() => {
     const checkForUpdates = async () => {
       try {
-        const response = await fetch('https://acsd.hyantalm.com/CarAppUpdate.json');
+        const response = await fetch('https://acsd.hyantalm.com/CarAppUpdate2.json');
         const data = await response.json();
         const appVersion = '3.0';
         checkAndUpdate(appVersion, data.CurrentVersion);
@@ -53,10 +53,10 @@ export default function App() {
     checkForUpdates();
   }, []);
 
-  const [theme, setTheme] = useState({ mode: "color1" });
+  const [theme, setTheme] = useState({ mode: "color3" });
   const activeColor = Colors[theme.mode];
 
-  const updateTheme = (newTheme = "color3") => {
+  const updateTheme = (newTheme = "color1") => {
     setTheme({ mode: newTheme });
     storeData("appTheme", newTheme);
   };

@@ -164,7 +164,20 @@ const useThemeStyles=(theme)=>{
             color:activeColor.mainColor,
             fontWeight:"bold"
           },
+          powerBtn:{
 
+            shadowColor: '#000',
+                    
+            shadowOffset: {
+              width: 0,
+              height: 15,
+            },
+            shadowOpacity: 0.54,
+            shadowRadius: 12.27,
+            transition: 'all 1s',
+            width:140,
+            height:140,  
+          },
           //error message
           errContaner:{
             width:"80%",

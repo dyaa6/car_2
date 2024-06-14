@@ -406,7 +406,7 @@ const switchOneOn=async()=>{
       style={Styles.runbutton}
     >
       <Image source={isEnabled1? require('../assets/btn_R.png'):require('../assets/btn_G.png')} 
-      style={{width:140,height:140,  transform:pressed? [{ scaleX: 1.05 }, { scaleY:1.05 }]:[{ scaleX: 1 }, { scaleY:1 }] ,transition: 'all 1s'}}
+      style={{transform:pressed? [{ scaleX: 1.05 }, { scaleY:1.05 }]:[{ scaleX: 1 }, { scaleY:1 }],...Styles.powerBtn }}
       />
     </TouchableOpacity>
     </View>

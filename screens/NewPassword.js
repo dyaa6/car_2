@@ -71,7 +71,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
           const response = await sendRequest();
           setResponseText(response);
       
-          if (oldPassword === '' || newPassword1 === '' || newPassword2 === '' || newSSID === '') {
+          if (newPassword1 === '' || newPassword2 === '' || newSSID === '') {
             setMsg('يجب أن تملأ جميع الحقول');
             setIsLoading(false);
             return;

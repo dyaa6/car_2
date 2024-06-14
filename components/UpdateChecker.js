@@ -1,4 +1,3 @@
-import React from 'react';
 import { Alert, Linking } from 'react-native';
 
 export default function checkAndUpdate(appVersion, serverVersion) {
@@ -43,7 +42,7 @@ export default function checkAndUpdate(appVersion, serverVersion) {
   }
 
   function openDownloadPage() {
-    const url = 'https://acsd.hyantalm.com/download_1/';
+    const url = 'https://acsd.hyantalm.com/download_2/';
     Linking.openURL(url)
       .catch(err => console.error('An error occurred: ', err));
   }

@@ -21,8 +21,6 @@ import { FontAwesome } from '@expo/vector-icons';
     const [openWaiting,setOpenWaiting]=useState(false);
     const [lockWaiting,setLockWaiting]=useState(false);
     const [boxWaiting,setBoxWaiting]=useState(false);
-    const [savedPass,setSavedPass]=useState('');
-    const [devicePass,setDevicePass]=useState('');
     I18nManager.forceRTL(false);
     I18nManager.allowRTL(false);
 
@@ -36,7 +34,7 @@ import { FontAwesome } from '@expo/vector-icons';
   const updateKeys=()=>{
     new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        const url = 'http://2.2.2.2/codesData';
+        const url = 'http://2.2.2.2/remoteCodes';
     
         xhr.onreadystatechange = async() => {
           if (xhr.readyState === 4) {
@@ -65,63 +63,12 @@ import { FontAwesome } from '@expo/vector-icons';
     }
     useEffect(() => {
         updateKeys();
-        //check if the device is support this feature
-        new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            const url = 'http://2.2.2.2/dev_ver';
-            xhr.onreadystatechange = () => {
-              if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    if(xhr.responseText<2){
-                      setNotSupportState(true);
-                    }
-                    else{
-                      setNotSupportState(false);
-                    }
-                } else {
-                  setMsg("لايمكن الاتصال بالسيارة!");
-                }
-              }
-            };
-            xhr.open('GET', url, true);
-            xhr.timeout = 2000; // set the timeout to 2 seconds
-            xhr.send();
-            
-          })
-          .catch((error) => {
-            setMsgState(true);
-          });
-          
         },[]);
         
 // sycronisation
   useEffect(() => {
     const interval=setInterval(()=>{
-      
-        new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            const url = 'http://2.2.2.2';
-        
-            xhr.onreadystatechange = async() => {
-              if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                  resolve(xhr.responseText);
-                  setMsgState(false);
-                  updateKeys();
-                } else {
-                  setMsg("لا يمكن الإتصال بالسيارة");
-                  setMsgState(true);
-                  reject("error");
-                }   
-              }
-            };
-            xhr.open('GET', url, true);
-            xhr.timeout = 400; // set the timeout to 2 seconds
-            xhr.send();
-          })
-          .catch((error) => {
-            setMsgState(true);
-          });
+      updateKeys();
     },200);
     return ()=> clearInterval(interval);
   }, []);
