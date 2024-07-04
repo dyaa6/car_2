@@ -87,14 +87,14 @@ const useThemeStyles=(theme)=>{
           led1:{
             width:80,
             height:20,
-            borderTopLeftRadius:15
+            borderBottomRightRadius:15,
+            borderLeftWidth:2
           },
           led3:{
             width:80,
             height:20,
             backgroundColor:activeColor.darkColor,
-            borderBottomRightRadius:15,
-            borderLeftWidth:2
+            borderTopLeftRadius:15,
           },
           ledOneOn:{
             backgroundColor:"red"

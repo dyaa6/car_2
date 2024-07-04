@@ -31,18 +31,18 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
   <TouchableOpacity  style={{...Styles.tochable, backgroundColor: activeColor.mainColor}}
  onPress={()=>{Linking.openURL("https://acsd.hyantalm.com/pruducts/")}}>
-  <MaterialCommunityIcons name="web" size={30} color="#fff" />
       <Text style={Styles.normalFont}>
       موقعنا الإلكتروني
       </Text>
+  <MaterialCommunityIcons name="web" size={30} color="#fff" />
   </TouchableOpacity>
     
   <TouchableOpacity  style={{...Styles.tochable, backgroundColor: activeColor.mainColor}}
  onPress={()=>{Linking.openURL("https://www.facebook.com/profile.php?id=100090287467770")}}>
-    <FontAwesome5 name="facebook" size={30} color="#fff" />
     <Text style={Styles.normalFont}>
     حسابنا على فيسبوك
-</Text>
+    </Text>
+    <FontAwesome5 name="facebook" size={30} color="#fff" />
 </TouchableOpacity>
  
      <Image source={require("../assets/acsd.png")} 

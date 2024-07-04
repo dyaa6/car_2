@@ -20,8 +20,8 @@ import { ThemeContext } from './components/ThemeContect';
 import { storeData, getData } from './components/asyncSrorage';
 import checkAndUpdate from './components/UpdateChecker';
 
-I18nManager.forceRTL(false);
-I18nManager.allowRTL(false);
+I18nManager.forceRTL(true);
+I18nManager.allowRTL(true);
 
 const Drawer = createDrawerNavigator();
 
@@ -92,20 +92,28 @@ export default function App() {
             drawerPosition: 'right',
           }}
         >
-           <Drawer.Screen name="الرئيسية" component={Home}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <FontAwesome name="home" color={color} size={size} />
-              ),
-            }} />
+          <Drawer.Screen name="الرئيسية" component={Home}
+              options={{
+                drawerLabel: ({ color }) => (
+                  <View style={{ flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
+                    <Text style={{ color, marginRight: 10, fontSize: 16 }}>الرئيسية</Text>
+                    <FontAwesome name="home" color={color} size={24} />
+                  </View>
+                ),
+              }} 
+            />
          
-          <Drawer.Screen name="الإعدادات" component={Settings}
+         <Drawer.Screen name="الإعدادات" component={Settings}
             options={{
-              drawerIcon: ({ color, size }) => (
-                <Ionicons name="settings-outline" size={size} color={color} />
-              ),
-              swipeEnabled: true,
-            }} />
+            drawerLabel: ({ color }) => (
+              <View style={{ flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
+                <Text style={{ color, marginRight: 10, fontSize: 16 }}>الإعدادات</Text>
+                <Ionicons name="settings-outline" size={24} color={color} />
+              </View>
+            ),
+            swipeEnabled: true,
+          }} 
+        />
           <Drawer.Screen name="اعدادات الشبكة" component={NewPassword} 
             options={{
               drawerIcon: ({ color, size }) => (
@@ -146,20 +154,28 @@ export default function App() {
               swipeEnabled: true,
               drawerItemStyle: { display: 'none' }
             }} />
-          <Drawer.Screen name="الأسئلة الشائعة" component={Questions}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <FontAwesome name="question-circle" size={24} color={color} />
-              ),
-              swipeEnabled: true,
-            }} />
+      <Drawer.Screen name="الأسئلة الشائعة" component={Questions}
+        options={{
+          drawerLabel: ({ color }) => (
+            <View style={{ flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
+              <Text style={{ color, marginRight: 10, fontSize: 16 }}>الأسئلة الشائعة</Text>
+              <FontAwesome name="question-circle" size={24} color={color} />
+            </View>
+          ),
+          swipeEnabled: true,
+        }} 
+    />
           <Drawer.Screen name="إتصل بنا" component={About} 
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <Entypo name="info" size={24} color={color} />
-              ),
-              swipeEnabled: true,
-            }} /> 
+              options={{
+                drawerLabel: ({ color }) => (
+                  <View style={{ flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
+                    <Text style={{ color, marginRight: 10, fontSize: 16 }}>إتصل بنا</Text>
+                    <Entypo name="info" size={24} color={color} />
+                  </View>
+                ),
+                swipeEnabled: true,
+              }} 
+            />
         </Drawer.Navigator>
       </NavigationContainer>
      </ThemeContext.Provider>

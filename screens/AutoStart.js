@@ -115,9 +115,6 @@ const setAuto=async ()=>{
     return(
 <View >
     <View style={{backgroundColor:activeColor.bgColor,alignItems:"center",flexDirection:"row-reverse",justifyContent:"space-between",paddingHorizontal:35,alignContent:"flex-start"}}>
-            <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
-                تشغيل السيارة بضغطة واحدة
-            </Text>
 
     <Switch
         trackColor={{ false: '#767577', true: activeColor.secondColor}}
@@ -127,21 +124,21 @@ const setAuto=async ()=>{
         value={isEnabled}
         style={Styles.smalSwitch} // set size
       />
+            <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
+                تشغيل السيارة بضغطة واحدة
+            </Text>
         </View>
         <View style={{backgroundColor:activeColor.bgColor,alignItems:"center",flexDirection:"row-reverse",justifyContent:"space-around",paddingHorizontal:70,direction:"rtl",paddingVertical:20,display:isEnabled?"flex":"none"}} >
-            <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
-               عدد محاولات التشغيل
-            </Text>
 <TextInput
     style={{
-        ...Styles.textboxtext,
-        borderWidth: 1,
-        borderColor: activeColor.mainColor,
-        width: 65,
-        height: 35,
-        textAlign: "center",
-        borderRadius: 15,
-        fontSize: 22,
+      ...Styles.textboxtext,
+      borderWidth: 1,
+      borderColor: activeColor.mainColor,
+      width: 65,
+      height: 35,
+      textAlign: "center",
+      borderRadius: 15,
+      fontSize: 22,
     }}
     placeholderTextColor={activeColor.placeHoleder}
     value={tryValue.toString()} // Convert to string
@@ -154,9 +151,12 @@ const setAuto=async ()=>{
     inputMode="numeric"
     maxLength={3} // Set maximum length
 />
+    <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
+       عدد محاولات التشغيل
+    </Text>
         </View>
     <View style={{paddingHorizontal:30,backgroundColor:activeColor.bgColor}}>
-    <Text style={{color:sucsess?"green":"red", textAlign:"right",direction:"rtl",marginTop:-10,marginBottom:10}}>{msg}</Text>
+    <Text style={{color:sucsess?"green":"red",marginTop:-10,marginBottom:10}}>{msg}</Text>
         <TouchableOpacity
           style={[ Styles.formButton, isLoading && Styles.loadingLoginButton]}
           onPress={setAuto}

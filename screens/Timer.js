@@ -53,7 +53,7 @@ const setTimer=async ()=>{
         if(isEnabled){
         new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          const url = 'http://2.2.2.2/setTimer?timeValue='+timeValue*60+'&state=on';
+          const url = 'http://2.2.2.2/setTimer?value='+timeValue*60+'&state=on';
           xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
               if (xhr.status === 200) {
@@ -78,7 +78,7 @@ const setTimer=async ()=>{
         else{//not enabled
           new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            const url = 'http://2.2.2.2/setTimer?timeValue=0&state=off';
+            const url = 'http://2.2.2.2/setTimer?value=0&state=off';
             xhr.onreadystatechange = () => {
               if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
@@ -109,9 +109,6 @@ const setTimer=async ()=>{
     return(
 <View >
     <View style={{backgroundColor:activeColor.bgColor,alignItems:"center",flexDirection:"row-reverse",justifyContent:"space-between",paddingHorizontal:35,alignContent:"flex-start"}}>
-            <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
-                فصل الجهاز بعد مدة معينة
-            </Text>
 
     <Switch
         trackColor={{ false: '#767577', true: activeColor.secondColor}}
@@ -121,21 +118,24 @@ const setTimer=async ()=>{
         value={isEnabled}
         style={Styles.smalSwitch} // set size
       />
+            <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
+                فصل الجهاز بعد مدة معينة
+            </Text>
         </View>
         <View style={{backgroundColor:activeColor.bgColor,alignItems:"center",flexDirection:"row-reverse",justifyContent:"space-around",paddingHorizontal:70,direction:"rtl",paddingVertical:20,display:isEnabled?"flex":"none"}} >
-            <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
-                فصل بعد
-            </Text>
+      <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
+          {timeValue>2 && timeValue<11?"دقائق":"دقيقة"}
+      </Text>
 <TextInput
     style={{
-        ...Styles.textboxtext,
-        borderWidth: 1,
-        borderColor: activeColor.mainColor,
-        width: 65,
-        height: 35,
-        textAlign: "center",
-        borderRadius: 15,
-        fontSize: 22,
+      ...Styles.textboxtext,
+      borderWidth: 1,
+      borderColor: activeColor.mainColor,
+      width: 65,
+      height: 35,
+      textAlign: "center",
+      borderRadius: 15,
+      fontSize: 22,
     }}
     placeholderTextColor={activeColor.placeHoleder}
     value={timeValue.toString()} // Convert to string
@@ -148,10 +148,10 @@ const setTimer=async ()=>{
     inputMode="numeric"
     maxLength={3} // Set maximum length
 />
+    <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
+        فصل بعد
+    </Text>
 
-        <Text style={{...Styles.normalFont,color:activeColor.fontColor}}>
-            {timeValue>2 && timeValue<11?"دقائق":"دقيقة"}
-        </Text>
         </View>
     <View style={{paddingHorizontal:30,backgroundColor:activeColor.bgColor}}>
     <Text style={{color:sucsess?"green":"red", textAlign:"right",direction:"rtl",marginTop:-10,marginBottom:10}}>{msg}</Text>

@@ -4,8 +4,8 @@ import useThemeStyles from '../components/Styles';
 import { View,Text, TouchableOpacity,StatusBar,Switch,StyleSheet,ImageBackground,I18nManager,Image, Vibration } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../components/Colors';
-I18nManager.forceRTL(false);
-I18nManager.allowRTL(false);
+I18nManager.forceRTL(true);
+I18nManager.allowRTL(true);
 
 
 
@@ -381,8 +381,8 @@ const switchOneOn=async()=>{
       <View style={Styles.stateContainer}>
         <View style={[Styles.stateLED,{backgroundColor: stateLed?"green":Colors.darkColor}]}/>
       <View style={Styles.LEDs}>
-      <View style={[Styles.led1, ledOne ? Styles.ledOneOn : Styles.ledOneOff]} />
       <View style={[Styles.led3, ledThree ? Styles.ledThreeOn : Styles.ledThreeOff]} />
+      <View style={[Styles.led1, ledOne ? Styles.ledOneOn : Styles.ledOneOff]} />
 
       </View>
       </View>
@@ -405,7 +405,7 @@ const switchOneOn=async()=>{
       //disabled={buttonOneEnabled}
       style={Styles.runbutton}
     >
-      <Image source={isEnabled1? require('../assets/btn_R.png'):require('../assets/btn_G.png')} 
+      <Image source={isEnabled1? require('../assets/btn_G.png'):require('../assets/btn_R.png')} 
       style={{transform:pressed? [{ scaleX: 1.05 }, { scaleY:1.05 }]:[{ scaleX: 1 }, { scaleY:1 }],...Styles.powerBtn }}
       />
     </TouchableOpacity>

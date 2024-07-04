@@ -1,7 +1,6 @@
 import react,{useState,useContext,useEffect} from "react";
 import { ThemeContext } from "../components/ThemeContect";
 import useThemeStyles from "../components/Styles";import {View,Text,TouchableOpacity, ScrollView, I18nManager, Image} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Styles from "../components/Styles";
 import Colors from "../components/Colors";
 import { FontAwesome } from '@expo/vector-icons';
@@ -21,8 +20,8 @@ import { FontAwesome } from '@expo/vector-icons';
     const [openWaiting,setOpenWaiting]=useState(false);
     const [lockWaiting,setLockWaiting]=useState(false);
     const [boxWaiting,setBoxWaiting]=useState(false);
-    I18nManager.forceRTL(false);
-    I18nManager.allowRTL(false);
+    I18nManager.forceRTL(true);
+    I18nManager.allowRTL(true);
 
     const {theme}=useContext(ThemeContext)
     let activeColor=Colors[theme.mode];
@@ -139,7 +138,7 @@ import { FontAwesome } from '@expo/vector-icons';
                   }
                 };
                 xhr.open('GET', url, true);
-                xhr.timeout = 300; // set the timeout to 2 seconds
+                xhr.timeout = 7000; // set the timeout to 2 seconds
                 xhr.send();
               })
               .catch((error) => {
@@ -172,7 +171,7 @@ import { FontAwesome } from '@expo/vector-icons';
     return(
     <ScrollView style={Styles.body}>
       <View style={{alignItems:"center"}}>
-        <View style={msgState? {display:'flex'} : {display:'none'}}>
+        <View style={msgState? {opacity:1} : {opacity:0}}>
           <Text style={Styles.messageText}>{msg}</Text>
         </View>
     
@@ -183,95 +182,95 @@ import { FontAwesome } from '@expo/vector-icons';
             onPress={()=>{auth('authPower')}}
             style={{...Styles.pannel,backgroundColor: powerWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
-                  <Text style={Styles.pannelFontMid}>إطفاء</Text>
                   <FontAwesome name="power-off" size={40} color="#fff" />
+                  <Text style={Styles.pannelFontMid}>إطفاء</Text>
                 </View>
             <View><Text style={{...Styles.normalFont,margin:10}}>
                 {powerWaiting?"جارِ إنتظار الضغط على الزر..":"انقر لإضافة زر جديد"}
                 </Text></View>
                 <View style={Styles.codeContainer}>
+                  <Text style={{...Styles.normalFont,paddingTop:8}}>{powerCode}</Text>
                     <TouchableOpacity 
                     onPress={()=>{reset('resetPower')}}
                     style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                         تصفير
                         </Text></TouchableOpacity>
-                        <Text style={{...Styles.normalFont,paddingTop:8}}>{powerCode}</Text>
                 </View>
         </TouchableOpacity>
           <TouchableOpacity 
             onPress={()=>{auth('authRun')}}
             style={{...Styles.pannel,backgroundColor: runWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
-                  <Text style={Styles.pannelFontMid}>تشغيل</Text>
                   <Image source={require('../assets/car-engine.png')} style={{width:40,height:40}}/>
+                  <Text style={Styles.pannelFontMid}>تشغيل</Text>
                 </View>
                 <View><Text style={{...Styles.normalFont,margin:10}}>
                 {runWaiting?"جارِ إنتظار الضغط على الزر..":"انقر لإضافة زر جديد"}
                     </Text></View>
                     <View style={Styles.codeContainer}>
+                      <Text style={{...Styles.normalFont,paddingTop:8}}>{runCode}</Text>
                         <TouchableOpacity 
                         onPress={()=>{reset('resetRun')}}
                         style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                             تصفير
                             </Text></TouchableOpacity>
-                            <Text style={{...Styles.normalFont,paddingTop:8}}>{runCode}</Text>
                     </View>
             </TouchableOpacity>
             <TouchableOpacity 
             onPress={()=>{auth('authOpen')}}
             style={{...Styles.pannel,backgroundColor: openWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
-                  <Text style={Styles.pannelFontMid}>فتح</Text>
                   <FontAwesome name="unlock" size={44} color="#fff" />
+                  <Text style={Styles.pannelFontMid}>فتح</Text>
                 </View> 
                 <View><Text style={{...Styles.normalFont,margin:10}}>
                 {openWaiting?"جارِ إنتظار الضغط على الزر..":"انقر لإضافة زر جديد"}
                     </Text></View>
                     <View style={Styles.codeContainer}>
+                      <Text style={{...Styles.normalFont,paddingTop:8}}>{opencode}</Text>
                         <TouchableOpacity 
                         onPress={()=>{reset('resetOpen')}}
                         style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                             تصفير
                             </Text></TouchableOpacity>
-                            <Text style={{...Styles.normalFont,paddingTop:8}}>{opencode}</Text>
                     </View>
             </TouchableOpacity>
             <TouchableOpacity 
             onPress={()=>{auth('authLock')}}
             style={{...Styles.pannel,backgroundColor: lockWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
-                  <Text style={Styles.pannelFontMid}>قفل</Text>
                   <FontAwesome name="lock" size={44} color="#fff" />
+                  <Text style={Styles.pannelFontMid}>قفل</Text>
                 </View>
                 <View><Text style={{...Styles.normalFont,margin:10}}>
                 {lockWaiting?"جارِ إنتظار الضغط على الزر..":"انقر لإضافة زر جديد"}
                     </Text></View>
                     <View style={Styles.codeContainer}>
+                      <Text style={{...Styles.normalFont,paddingTop:8}}>{lockCode}</Text>
                         <TouchableOpacity 
                         onPress={()=>{reset('resetLock')}}
                         style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                             تصفير
                             </Text></TouchableOpacity>
-                            <Text style={{...Styles.normalFont,paddingTop:8}}>{lockCode}</Text>
                     </View>
             </TouchableOpacity>
             <TouchableOpacity 
             onPress={()=>{auth('authBox')}}
             style={{...Styles.pannel,backgroundColor: boxWaiting?Colors.waiting:activeColor.mainColor}}>
                 <View style={Styles.remoteTitle}>
-                  <Text style={Styles.pannelFontMid}>الصندوق</Text>
                   <Image source={require('../assets/trunk-open.png')} style={{width:52,height:29}}/>
+                  <Text style={Styles.pannelFontMid}>الصندوق</Text>
                 </View>
                 <View><Text style={{...Styles.normalFont,margin:10}}>
                 {boxWaiting?"جارِ إنتظار الضغط على الزر..":"انقر لإضافة زر جديد"}
                     </Text></View>
                     <View style={Styles.codeContainer}>
+                      <Text style={{...Styles.normalFont,paddingTop:8}}>{boxCode}</Text>
                         <TouchableOpacity 
                         onPress={()=>{reset('resetBox')}}
                         style={Styles.resetButton}><Text style={[Styles.normalFont,Styles.resetButtonFont]}>
                             تصفير
                             </Text></TouchableOpacity>
-                            <Text style={{...Styles.normalFont,paddingTop:8}}>{boxCode}</Text>
                     </View>
             </TouchableOpacity>
             <TouchableOpacity 

@@ -105,8 +105,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
         <Text> </Text>
         <View style={Styles.inputContainer}>
-        <View style={{...Styles.loginFieldContainer,paddingLeft:5}}>
-      <Icon name="key" size={23} style={{ marginHorizontal: 10 }} color={activeColor.fontColor} />
+        <View style={{...Styles.loginFieldContainer}}>
           <TextInput
             style={{...Styles.textboxtext,flex:1}}
             placeholder="كلمة السر القديمة"
@@ -114,9 +113,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
             secureTextEntry={showPassword}
             value={oldPassword}
             onChangeText={setOldPassword}
-          /></View>
+          />
+      <Icon name="key" size={23} style={{ marginHorizontal: 10 }} color={activeColor.fontColor} />
+          </View>
         <View style={Styles.loginFieldContainer}>
-        <MaterialCommunityIcons name="form-textbox-password" size={23} color={activeColor.fontColor} />
           <TextInput
             style={{...Styles.textboxtext,flex:1}}
             placeholder="كلمة السر الجديدة"
@@ -126,9 +126,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
             onChangeText={setNewPassword1}
             maxLength={30}
           />
+        <MaterialCommunityIcons name="form-textbox-password" size={23} color={activeColor.fontColor} />
           </View>
           <View style={Styles.loginFieldContainer}>
-          <MaterialCommunityIcons name="form-textbox-password" size={23} color={activeColor.fontColor} />
           <TextInput
             style={{...Styles.textboxtext,flex:1}}
             placeholder="أعد كتابة كلمة السر الجديدة"
@@ -138,9 +138,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
             onChangeText={setNewPassword2}
             maxLength={30}
           />
+          <MaterialCommunityIcons name="form-textbox-password" size={23} color={activeColor.fontColor} />
           </View>
           <View style={Styles.loginFieldContainer}>
-          <MaterialCommunityIcons name="wifi-cog" size={23} color={activeColor.fontColor} />
           <TextInput
             style={{...Styles.textboxtext,flex:1}}
             placeholder="اسم جديد للشبكة"
@@ -149,8 +149,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
             onChangeText={setNewSSID}
             maxLength={30}
           />
+          <MaterialCommunityIcons name="wifi-cog" size={23} color={activeColor.fontColor} />
           </View>
-        <View style={{flexDirection:'row-reverse'}}>
+        <View style={{flexDirection:'row'}}>
           <TouchableOpacity style={{marginRight:10}}
           onPress={()=>{setShowPassword(!showPassword)}}
           >
@@ -172,7 +173,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
         >
           <Text style={Styles.buttonText}>{isLoading ? 'جارِ حفظ التغييرات..' : 'حفظ التغييرات'}</Text>
         </TouchableOpacity>
-        <Text style={{color:"orange", position:"absolute",bottom:0,textAlign:"right",direction:"rtl",fontSize:13}}>
+        <Text style={{color:"orange", position:"absolute",bottom:0,textAlign:"justify",fontSize:13}}>
         ملحوظة: في حال نسيت كلمة المرور، يمكنك إعادة ضبط الجهاز إلى إعدادات المصنع عن طريق الضغط المستمر على الزر الموجود على الجهاز لمدة خمسة ثوانٍ.
 </Text>
       </View>
