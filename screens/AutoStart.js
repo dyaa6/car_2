@@ -114,7 +114,7 @@ const setAuto=async ()=>{
 
     return(
 <View >
-    <View style={{backgroundColor:activeColor.bgColor,alignItems:"center",flexDirection:"row-reverse",justifyContent:"space-between",paddingHorizontal:35,alignContent:"flex-start"}}>
+    <View style={{backgroundColor:activeColor.bgColor,alignItems:"center",flexDirection:"row",justifyContent:"space-between",paddingHorizontal:35,alignContent:"flex-start"}}>
 
     <Switch
         trackColor={{ false: '#767577', true: activeColor.secondColor}}
@@ -135,7 +135,7 @@ const setAuto=async ()=>{
       borderWidth: 1,
       borderColor: activeColor.mainColor,
       width: 65,
-      height: 35,
+      height: 45,
       textAlign: "center",
       borderRadius: 15,
       fontSize: 22,
@@ -156,7 +156,7 @@ const setAuto=async ()=>{
     </Text>
         </View>
     <View style={{paddingHorizontal:30,backgroundColor:activeColor.bgColor}}>
-    <Text style={{color:sucsess?"green":"red",marginTop:-10,marginBottom:10}}>{msg}</Text>
+    <Text style={{color:sucsess?"green":"red",marginTop:-10,marginBottom:10, textAlign:"right"}}>{msg}</Text>
         <TouchableOpacity
           style={[ Styles.formButton, isLoading && Styles.loadingLoginButton]}
           onPress={setAuto}

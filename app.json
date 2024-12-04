@@ -1,8 +1,10 @@
-{
+{"cli": {
+    "appVersionSource": "remote"
+  },
   "expo": {
     "name": "My Car",
     "slug": "car_2",
-    "version": "3.0.1",
+    "version": "3.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -20,7 +22,12 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.acsd.car2",
-      "permissions": ["android.permission.INTERNET"]
+      "networkSecurityConfig": {
+        "baseConfig": {
+          "cleartextTrafficPermitted": true
+        }
+      },
+      "permissions": ["android.permission.INTERNET", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

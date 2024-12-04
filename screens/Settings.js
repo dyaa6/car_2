@@ -57,12 +57,20 @@ import { ThemeContext } from "../components/ThemeContect";
       </TouchableOpacity>
 
       <TouchableOpacity 
-      onPress={()=>navigation.navigate("تشغيل تلقائي")}
-      style={Styles.tochable}>
+        onPress={()=>navigation.navigate("تشغيل تلقائي")}
+        style={Styles.tochable}>
         <Text style={Styles.tochableColor}>
           تشغيل بضغطة واحدة
         </Text>
         <Image source={require('../assets/auto_start.png')} style={{width: 40, height: 30,marginVertical:-5}}/>
+      </TouchableOpacity>
+      <TouchableOpacity 
+        onPress={()=>navigation.navigate("تحديث نظام الجهاز")}
+        style={Styles.tochable}>
+        <Text style={Styles.tochableColor}>
+        تحديث نظام الجهاز
+        </Text>
+        <MaterialCommunityIcons name="update" size={32} color="white" />
       </TouchableOpacity>
       <TouchableOpacity 
       onPress={()=>navigation.navigate("ألوان التطبيق")}

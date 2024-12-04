@@ -1,5 +1,6 @@
 import { height } from "@fortawesome/free-solid-svg-icons/fa0";
 import Colors from "./Colors";
+import { Directions } from "react-native-gesture-handler";
 
 const useThemeStyles=(theme)=>{
   let activeColor=Colors[theme.mode];
@@ -31,10 +32,9 @@ const useThemeStyles=(theme)=>{
             marginTop:100
           },
           runbutton: {
-            height: 100,
             justifyContent: 'center',
             alignItems: 'center',
-            marginVertical: 20
+            marginVertical: 0,
           },
           buttonLoading: {
             borderWidth: 5,
@@ -165,9 +165,7 @@ const useThemeStyles=(theme)=>{
             fontWeight:"bold"
           },
           powerBtn:{
-
-            shadowColor: '#000',
-                    
+            shadowColor: '#000',    
             shadowOffset: {
               width: 0,
               height: 15,
@@ -206,9 +204,10 @@ const useThemeStyles=(theme)=>{
             fontWeight:"bold"
           },
           loginFieldContainer:{
-            flexDirection: 'row',
+            flexDirection: 'row-reverse',
             alignItems: 'center',
-            padding: 12,
+            padding: 5,
+            paddingLeft:10,
             borderColor: activeColor.mainColor,
             borderWidth: 1,
             borderRadius: 18,
@@ -218,8 +217,7 @@ const useThemeStyles=(theme)=>{
           textboxtext:{
             color:activeColor.fontColor,
             textAlign:"right",
-            height:20,
-            fontSize:17
+            fontSize:18
           },
           pannel:{
             width:"95%",
@@ -298,7 +296,7 @@ const useThemeStyles=(theme)=>{
           padding:15,
           borderRadius:15,
           margin:10,
-          flexDirection:"row",
+          flexDirection:"row-reverse",
           justifyContent:"space-between",
           paddingHorizontal:20
       },
@@ -366,13 +364,16 @@ const useThemeStyles=(theme)=>{
         margin:20,
         textAlign:"justify",
         fontSize:16.5,
+        direction:"rtl",
+        textIndent:"50px"
       },
       danger:{
         color:"red",
         width:"85%",
         marginHorizontal:20,
         textAlign:"justify",
-        fontSize:16.5
+        fontSize:16.5,
+        direction:"rtl",
       }
     }
   }

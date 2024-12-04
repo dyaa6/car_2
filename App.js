@@ -19,9 +19,10 @@ import AutoStart from './screens/AutoStart';
 import { ThemeContext } from './components/ThemeContect';
 import { storeData, getData } from './components/asyncSrorage';
 import checkAndUpdate from './components/UpdateChecker';
+import Update_page from './screens/Update';
 
-I18nManager.forceRTL(true);
-I18nManager.allowRTL(true);
+I18nManager.forceRTL(false);
+I18nManager.allowRTL(false);
 
 const Drawer = createDrawerNavigator();
 
@@ -90,12 +91,13 @@ export default function App() {
             headerTitleAlign: "center",
             headerTintColor: "#fff",
             drawerPosition: 'right',
+            
           }}
         >
           <Drawer.Screen name="الرئيسية" component={Home}
               options={{
                 drawerLabel: ({ color }) => (
-                  <View style={{ flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
+                  <View style={{ flexDirection: 'row-reverse', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
                     <Text style={{ color, marginRight: 10, fontSize: 16 }}>الرئيسية</Text>
                     <FontAwesome name="home" color={color} size={24} />
                   </View>
@@ -106,7 +108,7 @@ export default function App() {
          <Drawer.Screen name="الإعدادات" component={Settings}
             options={{
             drawerLabel: ({ color }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
+              <View style={{ flexDirection: 'row-reverse', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
                 <Text style={{ color, marginRight: 10, fontSize: 16 }}>الإعدادات</Text>
                 <Ionicons name="settings-outline" size={24} color={color} />
               </View>
@@ -146,18 +148,26 @@ export default function App() {
               swipeEnabled: true,
               drawerItemStyle: { display: 'none' }
             }} />
-          <Drawer.Screen name="ألوان التطبيق" component={Theme}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <Ionicons name="reload" size={24} color={color} />
-              ),
-              swipeEnabled: true,
-              drawerItemStyle: { display: 'none' }
-            }} />
+            <Drawer.Screen name="ألوان التطبيق" component={Theme}
+              options={{
+                drawerIcon: ({ color, size }) => (
+                  <Ionicons name="reload" size={24} color={color} />
+                ),
+                swipeEnabled: true,
+                drawerItemStyle: { display: 'none' }
+              }} />
+              <Drawer.Screen name="تحديث نظام الجهاز" component={Update_page}
+                options={{
+                  drawerIcon: ({ color, size }) => (
+                    <Ionicons name="reload" size={24} color={color} />
+                  ),
+                  swipeEnabled: true,
+                  drawerItemStyle: { display: 'none' }
+                }} />
       <Drawer.Screen name="الأسئلة الشائعة" component={Questions}
         options={{
           drawerLabel: ({ color }) => (
-            <View style={{ flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
+            <View style={{ flexDirection: 'row-reverse', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
               <Text style={{ color, marginRight: 10, fontSize: 16 }}>الأسئلة الشائعة</Text>
               <FontAwesome name="question-circle" size={24} color={color} />
             </View>
@@ -168,7 +178,7 @@ export default function App() {
           <Drawer.Screen name="إتصل بنا" component={About} 
               options={{
                 drawerLabel: ({ color }) => (
-                  <View style={{ flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
+                  <View style={{ flexDirection: 'row-reverse', alignItems: 'stretch', justifyContent: 'space-between', width: '100%' }}>
                     <Text style={{ color, marginRight: 10, fontSize: 16 }}>إتصل بنا</Text>
                     <Entypo name="info" size={24} color={color} />
                   </View>

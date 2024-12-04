@@ -1,7 +1,7 @@
 import react,{useState,useContext} from "react";
 import { ThemeContext } from "../components/ThemeContect";
 import useThemeStyles from "../components/Styles";
-import {View,Text,StyleSheet,TouchableOpacity, TextInput,Keyboard} from 'react-native';
+import {View,Text,StyleSheet,TouchableOpacity, TextInput,Keyboard,ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Ionicons } from '@expo/vector-icons';
@@ -26,7 +26,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
     const saveChanges=()=>{
         new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            const url = 'http://2.2.2.2/networkConfig?pass='+'&ssid=' + newSSID;
+            const url = 'http://2.2.2.2/networkConfig?pass='+newPassword1+'&ssid=' + newSSID;
             xhr.onreadystatechange = () => {
               if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
@@ -99,6 +99,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
       
     return(
         <View style={{...Styles.formContainer,...Styles.body,padding:120}}>
+
+          
         <Text style={Styles.title}>
           اعدادات الشبكة الخاصة بالجهاز
         </Text>
@@ -151,7 +153,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
           />
           <MaterialCommunityIcons name="wifi-cog" size={23} color={activeColor.fontColor} />
           </View>
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection:'row-reverse'}}>
           <TouchableOpacity style={{marginRight:10}}
           onPress={()=>{setShowPassword(!showPassword)}}
           >
@@ -173,7 +175,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
         >
           <Text style={Styles.buttonText}>{isLoading ? 'جارِ حفظ التغييرات..' : 'حفظ التغييرات'}</Text>
         </TouchableOpacity>
-        <Text style={{color:"orange", position:"absolute",bottom:0,textAlign:"justify",fontSize:13}}>
+
+        <Text style={{color:"orange",textAlign:"justify",fontSize:13,marginTop:60}}>
         ملحوظة: في حال نسيت كلمة المرور، يمكنك إعادة ضبط الجهاز إلى إعدادات المصنع عن طريق الضغط المستمر على الزر الموجود على الجهاز لمدة خمسة ثوانٍ.
 </Text>
       </View>

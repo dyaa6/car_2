@@ -20,8 +20,8 @@ import { FontAwesome } from '@expo/vector-icons';
     const [openWaiting,setOpenWaiting]=useState(false);
     const [lockWaiting,setLockWaiting]=useState(false);
     const [boxWaiting,setBoxWaiting]=useState(false);
-    I18nManager.forceRTL(true);
-    I18nManager.allowRTL(true);
+    I18nManager.forceRTL(false);
+    I18nManager.allowRTL(false);
 
     const {theme}=useContext(ThemeContext)
     let activeColor=Colors[theme.mode];
@@ -137,12 +137,48 @@ import { FontAwesome } from '@expo/vector-icons';
                     }
                   }
                 };
+                xhr.onerror = () => {
+                  switch(wt){
+                    case 'authPower':
+                        setPowerWaiting(false);
+                        break;
+                    case 'authRun':
+                        setRunWaiting(false);
+                        break;
+                    case 'authOpen':
+                        setOpenWaiting(false);
+                        break;
+                    case 'authLock':
+                        setLockWaiting(false);
+                        break;
+                    case 'authBox':
+                      setBoxWaiting(false);
+                      break;
+                }
+              };
                 xhr.open('GET', url, true);
                 xhr.timeout = 7000; // set the timeout to 2 seconds
                 xhr.send();
               })
               .catch((error) => {
                 setMsgState(true);
+                switch(wt){
+                  case 'authPower':
+                      setPowerWaiting(false);
+                      break;
+                  case 'authRun':
+                      setRunWaiting(false);
+                      break;
+                  case 'authOpen':
+                      setOpenWaiting(false);
+                      break;
+                  case 'authLock':
+                      setLockWaiting(false);
+                      break;
+                  case 'authBox':
+                    setBoxWaiting(false);
+                    break;
+              }
               });
                
         }

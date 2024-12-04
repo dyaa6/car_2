@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Base configuration: Disallow cleartext traffic globally -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- Allow cleartext traffic specifically to 2.2.2.2 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">2.2.2.2</domain>
+    </domain-config>
+</network-security-config>
